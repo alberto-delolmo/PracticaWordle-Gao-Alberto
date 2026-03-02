@@ -2,12 +2,14 @@ import {MAX_WORD_SIZE, MAX_ATTEMPTS} from "./env.js";
 import {Interface} from "./Interface.js";
 
 export class Game {
+    //Atributos del juego
     private _pickedWord: string
     private _actualWord: string
     private _turn: number
     private _actualPosition: number
     private _validLetterCodes: string[]
     private _interface: Interface
+    //Constructor, crea un wordle on la respuesta como el parámetro
     constructor(pickedWord: string){
         this._pickedWord = pickedWord;
         this._actualWord = "";
@@ -16,7 +18,7 @@ export class Game {
         this._validLetterCodes = ["KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Semicolon"];
         this._interface = new Interface();
     }
-
+    //Getters y setters
     get pickedWord(){
         return this._pickedWord;
     }
@@ -59,19 +61,37 @@ export class Game {
         this._interface = i;
     }
     
+    /**
+     * Comprueba si code es una letra y si es valida.
+     * @param code 
+     * @returns Si el parámetro code esta contenido en la lista _validLetterCodes y la posicion actual es menor que la del tamaño maximo de la palabra, retorna true,
+     * en caso contrario retorna false.
+     */
     isValidLetter(code: string):boolean {
         
         return  this._validLetterCodes.includes(code) && this._actualPosition < MAX_WORD_SIZE;
-     }
-
+    }
+    /**
+     * Comrueba si code es "Enter"
+     * @param code 
+     * @returns Retorna true si es "Enter", por lo contrario false.
+     */
     isEnterKey(code: string):boolean {
         return code=="Enter";
     }
-
+    /**
+     * Comprueba si code es "Backspace"
+     * @param code 
+     * @returns Retorna true si es "Backspace", por lo contrario false.
+     */
     isBackspaceKey(code: string):boolean{
         return code=="Backspace";
     }
-
+    /**
+     * Transforma de code a letra. Si es semicolon retorna ñ. En caso contrario con split toma la letra correspondiente después del "y" (KeyQ) -> (Q)
+     * @param code 
+     * @returns Retorna la letra correspondiente del code.
+     */
     transformCodeToLetter(code: string):string{
         let letter: string = "";
         if (code=="Semicolon") letter = "Ñ";
