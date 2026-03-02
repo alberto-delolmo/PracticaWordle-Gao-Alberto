@@ -9,6 +9,7 @@ export class WordEvaluator {
         for(let i = 0; i < wordTry.length ; i++){
             if (wordTry[i] == wordTarget[i]){
                 result[i] = LetterState.Correct;
+                targetLetters[i] = "_"; 
             }
         }
 
@@ -23,6 +24,7 @@ export class WordEvaluator {
 
             if (index != -1) {
                 result[i] = LetterState.Misplaced;
+                targetLetters[index] = "_";
             }else{
                 result[i] = LetterState.Wrong
             }
