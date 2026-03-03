@@ -4,36 +4,34 @@ type KeyState = "correct" | "misplaced" | "wrong";
 
 export class GameView {
 
-    setLetter(turn: number, position: number, letter: string): void {
-        
-        //He buscado este metodo en Internet y te permite recoger del HTML cualquier elemento con ese ID
-        //Si lo encuentra lo devuelve, sino es NULL
+    private getCell(turn: number, position: number): Element | null{
         const row = document.getElementById("row_"+ turn);
-        
-        if (row != null){
-            //Este método te permite recuperar las diferentes posiciones que hay dentro de ese elemento
-            const cell = row.children[position];
+        if(row == null){
+            return null;
+        }
+        return row.children[position];
+    }
+    
+    setLetter(turn: number, position: number, letter: string): void {
+        const cell = this.getCell(turn, position);
+        if (cell != null){
             cell.textContent = letter;
         }
     }
 
     deleteLetter(turn: number, position: number): void {
-        const row = document.getElementById("row_"+ turn);
-        
-        if(row != null){
-            const cell = row.children[position];
+        const cell = this.getCell(turn, position);
+        if (cell != null){
             cell.textContent = "";
         }
     }
 
     paintCell(turn: number, position: number, state: LetterState): void {
-        const row = document.getElementById("row_"+ turn);
-
-        if (row != null){
-            const cell = row.children[position];
-            const css = this.processState(state);
-            cell.classList.add(css);
+        const cell = this.getCell(turn, position);
+        if (cell == null){
+            return;
         }
+        cell.classList.add(this.getCellClass(state));
     }
 
     paintKeyBoard (letter: string, state: LetterState){
@@ -48,19 +46,8 @@ export class GameView {
                 button.classList.remove("key-yellow");
                 button.classList.remove("key-grey");
 
-                let newState : KeyState;
-
-                if (state == LetterState.Correct){
-                    button.classList.add("key-green");
-                    newState = "correct";
-                } else if( state == LetterState.Misplaced){
-                    button.classList.add("key-yellow");
-                    newState = "misplaced";
-                }else{
-                    button.classList.add("key-grey");
-                    newState = "wrong";
-                }
-
+                let newState = this.getKeyState(state);
+                button.classList.add("key-"+newState);
                 button.setAttribute("state", newState);
             }
         }
@@ -74,6 +61,26 @@ export class GameView {
         } else{
             return "cell-grey";
         }
+    }
+
+    private getCellClass(state: LetterState): string{
+        if (state == LetterState.Correct){
+            return "cell-green";
+        }
+        if(state == LetterState.Misplaced){
+            return "cell-yellow";
+        }
+        return "cell-grey";
+    }
+
+    private getKeyState(state: LetterState): KeyState{
+        if (state == LetterState.Correct){
+            return "correct";
+        }
+        if (state == LetterState.Misplaced){
+            return "misplaced";
+        }
+        return "wrong";
     }
 
     private hasToChange(currentState: KeyState | null, newState: LetterState): boolean{
