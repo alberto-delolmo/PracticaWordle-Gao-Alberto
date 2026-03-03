@@ -1,16 +1,18 @@
 export class Word {
 
     private word: string;
-    constructor(wordsArray: string){
-        this.word = wordsArray;
+    constructor(word: string){
+        this.word = word;
     }
 
     get Word(){
         return this.word;
     }
-    set Word(wordsArray: string){
-        this.word = wordsArray;
+    set Word(word: string){
+        this.word = word;
     }
 
-    
+    toString(){
+        return this.word;
+    }
 }

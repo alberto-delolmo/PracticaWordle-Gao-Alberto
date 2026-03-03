@@ -8,15 +8,13 @@ export class Game {
     private _turn: number
     private _actualPosition: number
     private _validLetterCodes: string[]
-    private _interface: Interface
     //Constructor, crea un wordle on la respuesta como el parámetro
     constructor(pickedWord: string){
         this._pickedWord = pickedWord;
         this._actualWord = "";
         this._turn = 1;
         this._actualPosition = 0;
-        this._validLetterCodes = ["KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Semicolon"];
-        this._interface = new Interface();
+        this._validLetterCodes = _validLetterCodes;
     }
     //Getters y setters
     get pickedWord(){
@@ -53,40 +51,8 @@ export class Game {
     set validLetterCodes(letters) {
         this._validLetterCodes = letters;
     }
-
-    get interface() {
-        return this._interface;
-    }
-    set interface(i) {
-        this._interface = i;
-    }
     
-    /**
-     * Comprueba si code es una letra y si es valida.
-     * @param code 
-     * @returns Si el parámetro code esta contenido en la lista _validLetterCodes y la posicion actual es menor que la del tamaño maximo de la palabra, retorna true,
-     * en caso contrario retorna false.
-     */
-    isValidLetter(code: string):boolean {
-        
-        return  this._validLetterCodes.includes(code) && this._actualPosition < MAX_WORD_SIZE;
-    }
-    /**
-     * Comrueba si code es "Enter"
-     * @param code 
-     * @returns Retorna true si es "Enter", por lo contrario false.
-     */
-    isEnterKey(code: string):boolean {
-        return code=="Enter";
-    }
-    /**
-     * Comprueba si code es "Backspace"
-     * @param code 
-     * @returns Retorna true si es "Backspace", por lo contrario false.
-     */
-    isBackspaceKey(code: string):boolean{
-        return code=="Backspace";
-    }
+    
     /**
      * Transforma de code a letra. Si es semicolon retorna ñ. En caso contrario con split toma la letra correspondiente después del "y" (KeyQ) -> (Q)
      * @param code 
@@ -98,28 +64,39 @@ export class Game {
         else letter = code.split("y")[1];
         return letter;
     }
-
+    /**
+     * Cambia el code a letra, coloca la letra en su posicion destinada, avanza el puntero _actualPosition en uno, y agrega dicho letra a la palabra formada.
+     * @param code 
+     */
     newLetter(code: string):void{
         let letter: string = this.transformCodeToLetter(code);
-        this._interface.setNewLetter(this.turn, this.actualPosition, letter);
+        //this._interface.setNewLetter(this.turn, this.actualPosition, letter);
         this._actualPosition = this._actualPosition + 1;
         this._actualWord += letter;
     }
-
-    checkWordIsRight():void{
+    /**
+     * Comprueba la pabra si es la misma que la de pickedWord
+     */
+    checkWordIsRight():string{
         if (this._actualWord == this._pickedWord){
             location.assign("/winner");
-        }
+            return "/winner"
+        } 
+        return "";
     }
-
+    /**
+     * Comprueba las letras coinciden tanto en posicion como en valor con el de la palabra uno a uno y le pone el fondo "rightLetter"
+     */
     checkRightLetters = ():void=>{
         for(let i=0; i<MAX_WORD_SIZE; i++){
             if (this._pickedWord[i]==this._actualWord[i]){
-                this._interface.changeBackgroundPosition(this._turn, i, "rightLetter");
+                //this._interface.changeBackgroundPosition(this._turn, i, "rightLetter");
             }
         }
     }
-
+    /**
+     * Comprueba las letras que existen en la palabra correcta pero no estan en la posicion correcta y le pone el fondo "misplacedLetter"
+     */
     checkMisplacedLetters = ():void=> {
         let actualLetter: string = "";
         let pattern: RegExp;
@@ -131,11 +108,13 @@ export class Game {
             pattern = new RegExp(actualLetter,"g");
             numberOfCoincidences = (this._pickedWord.match(pattern)||[]).length;
             if (this._pickedWord[i]==this._actualWord[i]) isMisplacedLetter=false;
-            if (numberOfCoincidences>0 && isMisplacedLetter) this._interface.changeBackgroundPosition(this._turn, i, "misplacedLetter");
+            //if (numberOfCoincidences>0 && isMisplacedLetter) this._interface.changeBackgroundPosition(this._turn, i, "misplacedLetter");
             
         }
     }
-
+    /**
+     * Comprueba las letras que no corresponden a la palabra correcta y les pone el fondo "wrongLetter"
+     */
     checkWrongLetters = ():void=>{
         let actualLetter = "";
         let pattern:RegExp;
@@ -144,10 +123,12 @@ export class Game {
             actualLetter = this._actualWord[i];
             pattern = new RegExp(actualLetter,"g");
             numberOfCoincidences = (this._pickedWord.match(pattern)||[]).length;
-            if (numberOfCoincidences==0) this._interface.changeBackgroundPosition(this._turn, i, "wrongLetter");
+            //if (numberOfCoincidences==0) this._interface.changeBackgroundPosition(this._turn, i, "wrongLetter");
         }
     }
-
+    /**
+     * Comprueba la palabra si tiene letras correctas, descolocada o erroneas, avanza un turno, resetea la posicion de columna y limpia a palabra introducida.
+     */
     updateAfterANewWord = ():void=>{
         this.checkRightLetters();
         this.checkMisplacedLetters();
@@ -156,13 +137,18 @@ export class Game {
         this._actualPosition = 0;
         this._actualWord = "";
     }
-
-    checkGameIsOver():void{
+    /**
+     * Comprueba si el jugador ha sobrepasado el limite de intentos y pierde si es asi.
+     */
+    checkGameIsOver():string{
         if (this.turn == MAX_ATTEMPTS){
-            location.assign("/loser");
+            return "/loser";
         }
+        return "";
     }
-
+    /**
+     * Metodo para cuando es presionado enter, si la palabra tiene el tamaño maximo realiza las comprobaciones de si la palabra es correcta, si se acabo el juego y actualiza.
+     */
     enterPressed():void{
         if (this._actualWord.length == MAX_WORD_SIZE){
             this.checkWordIsRight();
@@ -170,19 +156,24 @@ export class Game {
             this.updateAfterANewWord();
         }
     }
-
+    /**
+     * Metodo para cuando es presionado borrar, si la posicion es mayor que cero borra la ultima letra y regresa una posicion.
+     */
     backspacePressed():void{
         if (this._actualPosition > 0) {
             this._actualPosition -= 1;
-            this._interface.deleteLetter(this._turn, this._actualPosition);
+            //this._interface.deleteLetter(this._turn, this._actualPosition);
         }
     }
-
+    /**
+     * Metodo para cuando es presionado una tecla, comprueba si es una letra valido, si es el enter o si es el backspace.
+     * @param code 
+     */
     newKeyPressed(code: string):void{ 
-        if (this.isValidLetter(code)) this.newLetter(code);
+        /**if (this.isValidLetter(code)) this.newLetter(code);
         if (this.isEnterKey(code)) this.enterPressed();
         if (this.isBackspaceKey(code)) this.backspacePressed();
-        this._interface.changeBackgroundKey(code);
+        this._interface.changeBackgroundKey(code);*/
     }
 
     
