@@ -1,0 +1,13 @@
+import { GameController } from "../Controlador/GameController.js";
+import { GameModel } from "../Modelo/GameModel.js";
+import { WordRepository } from "../Aplicacion/WordRepository.js";
+import { GamePresenter } from "./GamePresenter.js";
+import { GameView } from "./GameView.js";
+var wordsCollection = WordRepository.getInstance();
+var pickedWord = wordsCollection.getRandomWord();
+console.log(pickedWord.toString());
+var gameModel = new GameModel(pickedWord.toString());
+var gameController = new GameController(gameModel);
+var gameView = new GameView();
+var gamePresenter = new GamePresenter(gameView, gameController);
+gamePresenter.init();

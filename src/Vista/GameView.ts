@@ -1,4 +1,4 @@
-import { LetterState } from "../Modelo/LetterState";
+import { LetterState } from "../Modelo/LetterState.js";
 
 type KeyState = "correct" | "misplaced" | "wrong";
 
