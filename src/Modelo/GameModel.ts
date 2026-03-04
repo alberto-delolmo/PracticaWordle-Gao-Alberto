@@ -10,44 +10,6 @@ export class GameModel {
     private winner: boolean = false;
     private wordTarget: string;
 
-<<<<<<< HEAD
-=======
-    
-    public getWordEvaluator(): WordEvaluator {
-        return this.wordEvaluator;
-    }
-
-    public setWordEvaluator(value: WordEvaluator): void {
-        this.wordEvaluator = value;
-    }
-
-    public getCurrentTurn(): number {
-        return this.currentTurn;
-    }
-
-    public setCurrentTurn(value: number): void {
-        this.currentTurn = value;
-    }
-
-    public getCurrentTry(): string {
-        return this.currentTry;
-    }
-
-    public setCurrentTry(value: string): void {
-        this.currentTry = value;
-    }
-
-    // wordTarget
-    public getWordTarget(): string {
-        return this.wordTarget;
-    }
-
-    public setWordTarget(value: string): void {
-        this.wordTarget = value;
-    }
-
->>>>>>> e5866a2fd642deed6b90e87100c54266978966cb
-
     constructor (wordTarget: string){
         this.wordEvaluator = new WordEvaluator();
         this.wordTarget = wordTarget; 
@@ -63,7 +25,7 @@ export class GameModel {
 
     //eliminamos la letra directamente
     deleteLetter(): void{
-        this.currentTry = this.currentTry.slice(0-1);
+        this.currentTry = this.currentTry.slice(0, -1);
     }
 
     // Miramos si coinciden la longitud de las palabras (sino NULL)
@@ -98,7 +60,17 @@ export class GameModel {
         return this.currentTurn > MAX_ATTEMPTS;
     }
 
+    getWordTarget(): string{
+        return this.wordTarget;
+    }
 
+    getTurn(): number{
+        return this.currentTurn;
+    }
+
+    getPosition(): number{
+        return this.currentTry.length;
+    }
 
 
 }

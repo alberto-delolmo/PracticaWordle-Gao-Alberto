@@ -8,7 +8,6 @@ var GameModel = /** @class */ (function () {
         this.wordEvaluator = new WordEvaluator();
         this.wordTarget = wordTarget;
     }
-
     //Miro a ver si puedo añadir letra y si se puede la añado 
     GameModel.prototype.addLetterTry = function (letter) {
         if (this.currentTry.length < MAX_WORD_SIZE) {
@@ -17,7 +16,7 @@ var GameModel = /** @class */ (function () {
     };
     //eliminamos la letra directamente
     GameModel.prototype.deleteLetter = function () {
-        this.currentTry = this.currentTry.slice(0 - 1);
+        this.currentTry = this.currentTry.slice(0, -1);
     };
     // Miramos si coinciden la longitud de las palabras (sino NULL)
     // Si coinciden las palabras --> WINNER
@@ -43,6 +42,15 @@ var GameModel = /** @class */ (function () {
     //cuando supera los intentos --> LOSER
     GameModel.prototype.isLoser = function () {
         return this.currentTurn > MAX_ATTEMPTS;
+    };
+    GameModel.prototype.getWordTarget = function () {
+        return this.wordTarget;
+    };
+    GameModel.prototype.getTurn = function () {
+        return this.currentTurn;
+    };
+    GameModel.prototype.getPosition = function () {
+        return this.currentTry.length;
     };
     return GameModel;
 }());

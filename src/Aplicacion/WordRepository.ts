@@ -1,4 +1,4 @@
-import { Word } from "../Modelo/Word";
+import { Word } from "../Modelo/Word.js";
 
 export class WordRepository {
 

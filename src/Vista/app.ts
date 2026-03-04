@@ -11,10 +11,17 @@ const pickedWord: Word = wordsCollection.getRandomWord();
 
 console.log(pickedWord.toString());
 
-
+const gamePresenter: GamePresenter = new GamePresenter();
 const gameModel: GameModel = new GameModel(pickedWord.toString());
-const gameController: GameController = new GameController(gameModel);
 const gameView: GameView = new GameView();
-const gamePresenter: GamePresenter = new GamePresenter(gameView, gameController);
+const gameController: GameController = new GameController(gameModel, gameView, gamePresenter);
 
-gamePresenter.init();
+document.addEventListener("keydown", (e) =>{
+    gameController.newKeyPressed(e.code);
+})
+
+
+Array.from(document.getElementsByClassName("key")).forEach(element => element.addEventListener("click", (e)=>{
+    gameController.newKeyPressed((<HTMLButtonElement>e.target).value);
+}));
+

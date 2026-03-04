@@ -6,8 +6,13 @@ import { GameView } from "./GameView.js";
 var wordsCollection = WordRepository.getInstance();
 var pickedWord = wordsCollection.getRandomWord();
 console.log(pickedWord.toString());
+var gamePresenter = new GamePresenter();
 var gameModel = new GameModel(pickedWord.toString());
-var gameController = new GameController(gameModel);
 var gameView = new GameView();
-var gamePresenter = new GamePresenter(gameView, gameController);
-gamePresenter.init();
+var gameController = new GameController(gameModel, gameView, gamePresenter);
+document.addEventListener("keydown", function (e) {
+    gameController.newKeyPressed(e.code);
+});
+Array.from(document.getElementsByClassName("key")).forEach(function (element) { return element.addEventListener("click", function (e) {
+    gameController.newKeyPressed(e.target.value);
+}); });
