@@ -47,15 +47,15 @@ export class GameView {
 
         if (button != null){
 
-            const currentState = button.getAttribute("data-state") as KeyState | null;
+            const currentState = button.getAttribute("state") as KeyState | null;
 
             if (this.hasToChange(currentState, state)){
-                button.classList.remove("cell-green");
-                button.classList.remove("cell-orange");
-                button.classList.remove("cell-grey");
+                button.classList.remove("key-green");
+                button.classList.remove("key-orange");
+                button.classList.remove("key-grey");
 
                 let newState = this.getKeyState(state);
-                button.classList.add("cell-"+newState);
+                button.classList.add("key-"+newState);
                 button.setAttribute("state", newState);
             }
         }
