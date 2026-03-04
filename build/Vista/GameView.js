@@ -83,6 +83,12 @@ var GameView = /** @class */ (function () {
         }
         return true;
     };
+    GameView.prototype.showLoseWord = function (word) {
+        var messageElemet = document.getElementById("lose_message");
+        if (messageElemet) {
+            messageElemet.textContent = "La palabra era: ".concat(word);
+        }
+    };
     return GameView;
 }());
 export { GameView };

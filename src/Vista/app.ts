@@ -15,6 +15,7 @@ const gamePresenter: GamePresenter = new GamePresenter();
 const gameModel: GameModel = new GameModel(pickedWord.toString());
 const gameView: GameView = new GameView();
 const gameController: GameController = new GameController(gameModel, gameView, gamePresenter);
+sessionStorage.setItem("pickedWordString",pickedWord.toString());
 
 document.addEventListener("keydown", (e) =>{
     gameController.newKeyPressed(e.code);
