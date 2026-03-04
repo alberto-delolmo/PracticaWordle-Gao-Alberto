@@ -1,29 +1,35 @@
-var Interface = /** @class */ (function () {
-    function Interface() {
-    }
-    Interface.prototype.setNewLetter = function (turn, position, letter) {
-        Array.from(document.getElementById("row_".concat(turn)).children)[position].textContent = letter;
-    };
-    Interface.prototype.deleteLetter = function (turn, position) {
-        Array.from(document.getElementById("row_".concat(turn)).children)[position].textContent = "";
-    };
-    Interface.prototype.changeBackgroundPosition = function (turn, position, state) {
-        var positionClass = "cell-grey";
-        if (state == "rightLetter")
-            positionClass = "cell-green";
-        if (state == "misplacedLetter")
-            positionClass = "cell-orange";
-        Array.from(document.getElementById("row_".concat(turn)).children)[position].classList.add(positionClass);
-    };
-    Interface.prototype.changeBackgroundKey = function (code) {
-        var keys = document.getElementsByClassName("key");
-        for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
-            var key = keys_1[_i];
-            if (key.value == code && code !== "Enter" && code !== "Backspace") {
-                key.classList.add("keyPressed");
-            }
-        }
-    };
-    return Interface;
-}());
-export { Interface };
+"use strict";
+// export class Interface {
+//     /**
+//      * Coloca una letra en una celda especificada en una fila concreta, siendo turn la fila y el position la columna.
+//      * @param turn 
+//      * @param position 
+//      * @param letter 
+//      */
+//     setNewLetter(turn: number,position: number, letter: string) {
+//         Array.from(document.getElementById(`row_${turn}`)!.children)[position].textContent = letter;
+//     }
+//     deleteLetter(turn: number, position: number) {
+//         Array.from(document.getElementById(`row_${turn}`)!.children)[position].textContent = "";
+//     }
+//     /**
+//      * Cambia el fondo de las casillas de las letras.
+//      * @param turn 
+//      * @param position 
+//      * @param state 
+//      */
+//     changeBackgroundPosition(turn: number, position: number, state: string){
+//         let positionClass = "cell-grey";
+//         if (state=="rightLetter") positionClass = "cell-green";
+//         if (state=="misplacedLetter") positionClass = "cell-orange";
+//         Array.from(document.getElementById(`row_${turn}`)!.children)[position].classList.add(positionClass);
+//     }
+//     changeBackgroundKey(code: string){
+//        const keys: any = document.getElementsByClassName("key");
+//        for (let key of keys) {
+//             if (key.value == code && code !== "Enter" && code !=="Backspace"){
+//                 key.classList.add("keyPressed");
+//             }
+//        }
+//     }
+// }

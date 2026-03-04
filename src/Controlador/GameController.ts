@@ -1,5 +1,4 @@
-import {GameModel} from "../Modelo/GameModel";
-import { LetterState } from "../Modelo/LetterState";
+import {GameModel} from "../Modelo/GameModel.js";
 
 
 
@@ -7,6 +6,13 @@ export class GameController {
     private _validLetterCodes: string[] = ["KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "KeyA",
          "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Semicolon"];
     private game: GameModel;
+
+    public getGame(): GameModel {
+        return this.game;
+    }
+    public setGame(value: GameModel) {
+        this.game = value;
+    }
 
     constructor(game: GameModel){
         this.game = game;
