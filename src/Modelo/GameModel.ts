@@ -10,6 +10,8 @@ export class GameModel {
     private winner: boolean = false;
     private wordTarget: string;
 
+<<<<<<< HEAD
+=======
     
     public getWordEvaluator(): WordEvaluator {
         return this.wordEvaluator;
@@ -44,6 +46,7 @@ export class GameModel {
         this.wordTarget = value;
     }
 
+>>>>>>> e5866a2fd642deed6b90e87100c54266978966cb
 
     constructor (wordTarget: string){
         this.wordEvaluator = new WordEvaluator();

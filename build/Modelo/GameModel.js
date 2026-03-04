@@ -8,31 +8,7 @@ var GameModel = /** @class */ (function () {
         this.wordEvaluator = new WordEvaluator();
         this.wordTarget = wordTarget;
     }
-    GameModel.prototype.getWordEvaluator = function () {
-        return this.wordEvaluator;
-    };
-    GameModel.prototype.setWordEvaluator = function (value) {
-        this.wordEvaluator = value;
-    };
-    GameModel.prototype.getCurrentTurn = function () {
-        return this.currentTurn;
-    };
-    GameModel.prototype.setCurrentTurn = function (value) {
-        this.currentTurn = value;
-    };
-    GameModel.prototype.getCurrentTry = function () {
-        return this.currentTry;
-    };
-    GameModel.prototype.setCurrentTry = function (value) {
-        this.currentTry = value;
-    };
-    // wordTarget
-    GameModel.prototype.getWordTarget = function () {
-        return this.wordTarget;
-    };
-    GameModel.prototype.setWordTarget = function (value) {
-        this.wordTarget = value;
-    };
+
     //Miro a ver si puedo añadir letra y si se puede la añado 
     GameModel.prototype.addLetterTry = function (letter) {
         if (this.currentTry.length < MAX_WORD_SIZE) {
