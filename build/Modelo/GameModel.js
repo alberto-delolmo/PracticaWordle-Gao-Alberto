@@ -16,7 +16,7 @@ var GameModel = /** @class */ (function () {
     };
     //eliminamos la letra directamente
     GameModel.prototype.deleteLetter = function () {
-        this.currentTry = this.currentTry.slice(0 - 1);
+        this.currentTry = this.currentTry.slice(0, -1);
     };
     // Miramos si coinciden la longitud de las palabras (sino NULL)
     // Si coinciden las palabras --> WINNER

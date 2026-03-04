@@ -25,7 +25,7 @@ export class GameModel {
 
     //eliminamos la letra directamente
     deleteLetter(): void{
-        this.currentTry = this.currentTry.slice(0-1);
+        this.currentTry = this.currentTry.slice(0, -1);
     }
 
     // Miramos si coinciden la longitud de las palabras (sino NULL)
