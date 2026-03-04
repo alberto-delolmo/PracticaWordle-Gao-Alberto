@@ -1,4 +1,4 @@
-import { Word } from "../Modelo/Word";
+import { Word } from "../Modelo/Word.js";
 var WordRepository = /** @class */ (function () {
     function WordRepository() {
         this.wordsCollection = [

@@ -1,5 +1,5 @@
-import { MAX_ATTEMPTS, MAX_WORD_SIZE } from "../env";
-import { WordEvaluator } from "./WordEvaluator";
+import { MAX_ATTEMPTS, MAX_WORD_SIZE } from "../env.js";
+import { WordEvaluator } from "./WordEvaluator.js";
 var GameModel = /** @class */ (function () {
     function GameModel(wordTarget) {
         this.currentTurn = 1;

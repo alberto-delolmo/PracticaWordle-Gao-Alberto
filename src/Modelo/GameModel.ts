@@ -1,6 +1,6 @@
-import { MAX_ATTEMPTS, MAX_WORD_SIZE } from "../env";
-import { LetterState } from "./LetterState";
-import { WordEvaluator } from "./WordEvaluator"
+import { MAX_ATTEMPTS, MAX_WORD_SIZE } from "../env.js";
+import { LetterState } from "./LetterState.js";
+import { WordEvaluator } from "./WordEvaluator.js"
 
 export class GameModel {
 

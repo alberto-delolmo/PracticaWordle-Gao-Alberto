@@ -32,5 +32,5 @@ app.get("/loser", function (req, res) {
 });
 /**Inicia el escucha en el puerto 3000 con un mensaje en terminal de que "Wordle is listening at port 3000..." */
 app.listen(3000, function () {
-    console.log("Wordle is listening at port 3000...");
+    console.log("Wordle is listening at port http://localhost:3000");
 });
