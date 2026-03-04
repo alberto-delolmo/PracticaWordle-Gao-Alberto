@@ -1,69 +1,73 @@
 var GameController = /** @class */ (function () {
     function GameController(game, view, presenter) {
-        this._validLetterCodes = ["KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "KeyA",
-            "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Semicolon"];
+        this._validLetterCodes = [
+            "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP",
+            "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL",
+            "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Semicolon"
+        ];
         this.game = game;
         this.view = view;
         this.presenter = presenter;
+        this.initializeCellClicks();
     }
-    GameController.prototype.getGame = function () {
-        return this.game;
-    };
-    GameController.prototype.setGame = function (value) {
-        this.game = value;
+    GameController.prototype.initializeCellClicks = function () {
+        var _this = this;
+        var rows = document.querySelectorAll(".row");
+        rows.forEach(function (row, rowIndex) {
+            var cells = row.querySelectorAll(".cell");
+            cells.forEach(function (cell, colIndex) {
+                cell.addEventListener("click", function () {
+                    if (rowIndex + 1 === _this.game.getTurn()) {
+                        document.querySelectorAll(".cell").forEach(function (c) {
+                            return c.classList.remove("active");
+                        });
+                        cell.classList.add("active");
+                        _this.game.setPosition(colIndex);
+                    }
+                });
+            });
+        });
     };
     GameController.prototype.newLetter = function (code) {
         var letter = this.transformCodeToLetter(code);
+        var positionBefore = this.game.getPosition();
         this.game.addLetterTry(letter);
-        this.view.setLetter(this.game.getTurn(), this.game.getPosition() - 1, letter);
+        this.view.setLetter(this.game.getTurn(), positionBefore, letter);
+        this.moveCursorVisual();
     };
-    /**
-     * Comprueba si code es una letra y si es valida.
-     * @param code
-     * @returns Si el parámetro code esta contenido en la lista _validLetterCodes, retorna true,
-     * en caso contrario retorna false.
-     */
-    GameController.prototype.isValidLetter = function (code) {
-        return this._validLetterCodes.includes(code);
+    /*backspacePressed(): void {
+
+        const positionBefore = this.game.getPosition();
+
+        if (positionBefore > 0) {
+
+            this.game.deleteLetter();
+
+            this.view.deleteLetter(
+                this.game.getTurn(),
+                positionBefore - 1
+            );
+
+            this.moveCursorVisual();
+        }
+    }*/
+    GameController.prototype.backspacePressed = function () {
+        var currentPosition = this.game.getPosition();
+        if (currentPosition < this.game.getWordTarget().length) {
+            this.game.deleteLetter();
+            this.view.deleteLetter(this.game.getTurn(), currentPosition);
+        }
+        else if (currentPosition > 0) {
+            this.game.deleteLetter();
+            this.view.deleteLetter(this.game.getTurn(), currentPosition - 1);
+        }
+        this.moveCursorVisual();
     };
-    /**
-     * Comrueba si code es "Enter"
-     * @param code
-     * @returns Retorna true si es "Enter", por lo contrario false.
-     */
-    GameController.prototype.isEnterKey = function (code) {
-        return code == "Enter";
-    };
-    /**
-     * Comprueba si code es "Backspace"
-     * @param code
-     * @returns Retorna true si es "Backspace", por lo contrario false.
-     */
-    GameController.prototype.isBackspaceKey = function (code) {
-        return code == "Backspace";
-    };
-    /**
-     * Transforma de code a letra. Si es semicolon retorna ñ. En caso contrario con split toma la letra correspondiente después del "y" (KeyQ) -> (Q)
-     * @param code
-     * @returns Retorna la letra correspondiente del code.
-     */
-    GameController.prototype.transformCodeToLetter = function (code) {
-        var letter = "";
-        if (code == "Semicolon")
-            letter = "Ñ";
-        else
-            letter = code.split("y")[1];
-        return letter;
-    };
-    /**
-     * Metodo para cuando es presionado enter
-     */
     GameController.prototype.enterPressed = function () {
         var _this = this;
         var evaluation = this.game.enterTry();
-        if (evaluation === null) {
-            return null;
-        }
+        if (!evaluation)
+            return;
         var wordTry = evaluation.wordTry, result = evaluation.result;
         result.forEach(function (state, index) {
             var letter = wordTry[index];
@@ -72,30 +76,30 @@ var GameController = /** @class */ (function () {
         });
         this.checkGameStatus();
     };
-    /**
-     * Metodo para cuando es presionado borrar, si la posicion es mayor que cero borra la ultima letra y regresa una posicion.
-     */
-    GameController.prototype.backspacePressed = function () {
-        console.log("Elimina la posicion " + this.game.getPosition);
-        this.game.deleteLetter();
-        this.view.deleteLetter(this.game.getTurn(), this.game.getPosition());
-    };
-    /**
-     * Metodo para cuando es presionado una tecla, comprueba si es una letra valido, si es el enter o si es el backspace.
-     * @param code
-     */
     GameController.prototype.newKeyPressed = function (code) {
         if (this.isValidLetter(code)) {
             this.newLetter(code);
-            return null;
         }
         else if (this.isEnterKey(code)) {
-            return this.enterPressed();
+            this.enterPressed();
         }
         else if (this.isBackspaceKey(code)) {
             this.backspacePressed();
-            return null;
         }
+    };
+    GameController.prototype.isValidLetter = function (code) {
+        return this._validLetterCodes.includes(code);
+    };
+    GameController.prototype.isEnterKey = function (code) {
+        return code === "Enter";
+    };
+    GameController.prototype.isBackspaceKey = function (code) {
+        return code === "Backspace";
+    };
+    GameController.prototype.transformCodeToLetter = function (code) {
+        if (code === "Semicolon")
+            return "Ñ";
+        return code.split("y")[1];
     };
     GameController.prototype.checkGameStatus = function () {
         if (this.game.isWinner()) {
@@ -103,6 +107,19 @@ var GameController = /** @class */ (function () {
         }
         if (this.game.isLoser()) {
             this.presenter.goToLoser();
+        }
+    };
+    GameController.prototype.moveCursorVisual = function () {
+        document.querySelectorAll(".cell").forEach(function (c) {
+            return c.classList.remove("active");
+        });
+        var row = document.getElementById("row_" + this.game.getTurn());
+        if (!row)
+            return;
+        var cells = row.querySelectorAll(".cell");
+        var pos = this.game.getPosition();
+        if (pos < cells.length) {
+            cells[pos].classList.add("active");
         }
     };
     return GameController;

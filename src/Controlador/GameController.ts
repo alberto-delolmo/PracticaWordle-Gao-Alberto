@@ -1,90 +1,104 @@
-import {GameModel} from "../Modelo/GameModel.js";
+import { GameModel } from "../Modelo/GameModel.js";
 import { GamePresenter } from "../Vista/GamePresenter.js";
 import { GameView } from "../Vista/GameView.js";
 
-
-
 export class GameController {
-    private _validLetterCodes: string[] = ["KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "KeyA",
-         "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Semicolon"];
+
+    private _validLetterCodes: string[] = [
+        "KeyQ","KeyW","KeyE","KeyR","KeyT","KeyY","KeyU","KeyI","KeyO","KeyP",
+        "KeyA","KeyS","KeyD","KeyF","KeyG","KeyH","KeyJ","KeyK","KeyL",
+        "KeyZ","KeyX","KeyC","KeyV","KeyB","KeyN","KeyM","Semicolon"
+    ];
+
     private game: GameModel;
     private view: GameView;
     private presenter: GamePresenter;
-
-    public getGame(): GameModel {
-        return this.game;
-    }
-    public setGame(value: GameModel) {
-        this.game = value;
-    }
 
     constructor(game: GameModel, view: GameView, presenter: GamePresenter){
         this.game = game;
         this.view = view;
         this.presenter = presenter;
+
+        this.initializeCellClicks();
     }
+
+
+    private initializeCellClicks(): void {
+
+        const rows = document.querySelectorAll(".row");
+
+        rows.forEach((row, rowIndex) => {
+
+            const cells = row.querySelectorAll(".cell");
+
+            cells.forEach((cell, colIndex) => {
+
+                cell.addEventListener("click", () => {
+
+                    if (rowIndex + 1 === this.game.getTurn()) {
+
+                        document.querySelectorAll(".cell").forEach(c =>
+                            c.classList.remove("active")
+                        );
+
+                        cell.classList.add("active");
+
+                        this.game.setPosition(colIndex);
+                    }
+                });
+
+            });
+        });
+    }
+
 
     newLetter(code: string): void {
-        let letter = this.transformCodeToLetter(code);
+
+        const letter = this.transformCodeToLetter(code);
+
+        const positionBefore = this.game.getPosition();
+
         this.game.addLetterTry(letter);
-        this.view.setLetter(this.game.getTurn(), this.game.getPosition() - 1, letter);
+
+        this.view.setLetter(
+            this.game.getTurn(),
+            positionBefore,
+            letter
+        );
+
+        this.moveCursorVisual();
     }
 
-    /**
-     * Comprueba si code es una letra y si es valida.
-     * @param code 
-     * @returns Si el parámetro code esta contenido en la lista _validLetterCodes, retorna true,
-     * en caso contrario retorna false.
-     */
-    isValidLetter(code: string):boolean {
-        return  this._validLetterCodes.includes(code);
-    }
+    backspacePressed ( ) : void { 
 
-    /**
-     * Comrueba si code es "Enter"
-     * @param code 
-     * @returns Retorna true si es "Enter", por lo contrario false.
-     */
-    isEnterKey(code: string):boolean {
-        return code=="Enter";
-    }
-    /**
-     * Comprueba si code es "Backspace"
-     * @param code 
-     * @returns Retorna true si es "Backspace", por lo contrario false.
-     */
-    isBackspaceKey(code: string):boolean{
-        return code=="Backspace";
-    }
+        const currentPosition = this.game.getPosition(); 
+        if ( currentPosition < this.game.getWordTarget().length) { 
+            this.game.deleteLetter(); 
+            this.view.deleteLetter(this.game.getTurn(),currentPosition);
+        } else if ( currentPosition > 0 ) {
+            this.game.deleteLetter(); 
+            this.view.deleteLetter( this.game.getTurn(), currentPosition - 1); 
+        }     
+        this.moveCursorVisual();
+    } 
+
     
-    /**
-     * Transforma de code a letra. Si es semicolon retorna ñ. En caso contrario con split toma la letra correspondiente después del "y" (KeyQ) -> (Q)
-     * @param code 
-     * @returns Retorna la letra correspondiente del code.
-     */
-    transformCodeToLetter(code: string):string{
-        let letter: string = "";
-        if (code=="Semicolon") letter = "Ñ";
-        else letter = code.split("y")[1];
-        return letter;
-    }
 
-    /**
-     * Metodo para cuando es presionado enter
-     */
+        
+
     enterPressed() {
+
         const evaluation = this.game.enterTry();
 
-        if (evaluation === null) {
-            return null;
-        }
+        if (!evaluation) return;
 
-        const {wordTry, result} = evaluation;
+        const { wordTry, result } = evaluation;
 
-        result.forEach((state, index) =>{
+        result.forEach((state, index) => {
+
             const letter = wordTry[index];
 
-            this.view.paintCell(this.game.getTurn()-1, index, state);
+            this.view.paintCell(this.game.getTurn() - 1, index, state);
             this.view.paintKeyBoard(letter, state);
         });
 
@@ -92,29 +106,34 @@ export class GameController {
     }
 
 
+    newKeyPressed(code: string){
 
-    /**
-     * Metodo para cuando es presionado borrar, si la posicion es mayor que cero borra la ultima letra y regresa una posicion.
-     */
-    backspacePressed():void{
-        console.log("Elimina la posicion " + this.game.getPosition);
-        this.game.deleteLetter();
-        this.view.deleteLetter(this.game.getTurn(), this.game.getPosition());
-    }
-    /**
-     * Metodo para cuando es presionado una tecla, comprueba si es una letra valido, si es el enter o si es el backspace.
-     * @param code 
-     */
-    newKeyPressed(code: string){ 
         if (this.isValidLetter(code)){
             this.newLetter(code);
-            return null;
-        } else if (this.isEnterKey(code)){
-            return this.enterPressed();
-        } else if (this.isBackspaceKey(code)){
+        }
+        else if (this.isEnterKey(code)){
+            this.enterPressed();
+        }
+        else if (this.isBackspaceKey(code)){
             this.backspacePressed();
-            return null;
-        } 
+        }
+    }
+
+    isValidLetter(code: string): boolean {
+        return this._validLetterCodes.includes(code);
+    }
+
+    isEnterKey(code: string): boolean {
+        return code === "Enter";
+    }
+
+    isBackspaceKey(code: string): boolean {
+        return code === "Backspace";
+    }
+
+    transformCodeToLetter(code: string): string {
+        if (code === "Semicolon") return "Ñ";
+        return code.split("y")[1];
     }
 
     checkGameStatus() {
@@ -123,6 +142,25 @@ export class GameController {
         }
         if (this.game.isLoser()) {
             this.presenter.goToLoser();
+        }
+    }
+
+    private moveCursorVisual(): void {
+
+        document.querySelectorAll(".cell").forEach(c =>
+            c.classList.remove("active")
+        );
+
+        const row = document.getElementById("row_" + this.game.getTurn());
+
+        if (!row) return;
+
+        const cells = row.querySelectorAll(".cell");
+
+        const pos = this.game.getPosition();
+
+        if (pos < cells.length) {
+            cells[pos].classList.add("active");
         }
     }
 }
