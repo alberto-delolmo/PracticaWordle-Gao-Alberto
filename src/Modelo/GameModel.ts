@@ -60,5 +60,17 @@ export class GameModel {
         return this.currentTurn > MAX_ATTEMPTS;
     }
 
+    getWordTarget(): string{
+        return this.wordTarget;
+    }
+
+    getTurn(): number{
+        return this.currentTurn;
+    }
+
+    getPosition(): number{
+        return this.currentTry.length;
+    }
+
 
 }
