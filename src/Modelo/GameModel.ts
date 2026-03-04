@@ -10,40 +10,6 @@ export class GameModel {
     private winner: boolean = false;
     private wordTarget: string;
 
-    
-    public getWordEvaluator(): WordEvaluator {
-        return this.wordEvaluator;
-    }
-
-    public setWordEvaluator(value: WordEvaluator): void {
-        this.wordEvaluator = value;
-    }
-
-    public getCurrentTurn(): number {
-        return this.currentTurn;
-    }
-
-    public setCurrentTurn(value: number): void {
-        this.currentTurn = value;
-    }
-
-    public getCurrentTry(): string {
-        return this.currentTry;
-    }
-
-    public setCurrentTry(value: string): void {
-        this.currentTry = value;
-    }
-
-    // wordTarget
-    public getWordTarget(): string {
-        return this.wordTarget;
-    }
-
-    public setWordTarget(value: string): void {
-        this.wordTarget = value;
-    }
-
 
     constructor (wordTarget: string){
         this.wordEvaluator = new WordEvaluator();
