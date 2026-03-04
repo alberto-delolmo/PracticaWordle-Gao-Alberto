@@ -4,24 +4,40 @@ var GameModel = /** @class */ (function () {
     function GameModel(wordTarget) {
         this.currentTurn = 1;
         this.currentTry = "";
+        this.currentPosition = 0;
         this.winner = false;
         this.wordEvaluator = new WordEvaluator();
         this.wordTarget = wordTarget;
     }
-    //Miro a ver si puedo añadir letra y si se puede la añado 
     GameModel.prototype.addLetterTry = function (letter) {
-        if (this.currentTry.length < MAX_WORD_SIZE) {
-            this.currentTry += letter;
+        if (this.currentPosition < MAX_WORD_SIZE) {
+            if (this.currentPosition < this.currentTry.length) {
+                this.currentTry =
+                    this.currentTry.substring(0, this.currentPosition) +
+                        letter +
+                        this.currentTry.substring(this.currentPosition + 1);
+            }
+            else {
+                this.currentTry += letter;
+            }
+            this.currentPosition++;
         }
     };
-    //eliminamos la letra directamente
     GameModel.prototype.deleteLetter = function () {
-        this.currentTry = this.currentTry.slice(0, -1);
+        if (this.currentPosition < this.currentTry.length) {
+            this.currentTry =
+                this.currentTry.substring(0, this.currentPosition) +
+                    this.currentTry.substring(this.currentPosition + 1);
+        }
+        else if (this.currentPosition > 0) {
+            this.currentPosition--;
+            this.currentTry =
+                this.currentTry.substring(0, this.currentPosition);
+        }
     };
-    // Miramos si coinciden la longitud de las palabras (sino NULL)
-    // Si coinciden las palabras --> WINNER
-    // Actualizamos el intento y el turno
-    // Devolvemos la tupla del intento y el resultado para que la UI pueda pintar las letras
+    GameModel.prototype.setPosition = function (position) {
+        this.currentPosition = position;
+    };
     GameModel.prototype.enterTry = function () {
         if (this.currentTry.length != MAX_WORD_SIZE) {
             return null;
@@ -33,24 +49,23 @@ var GameModel = /** @class */ (function () {
         }
         this.currentTurn++;
         this.currentTry = "";
+        this.currentPosition = 0;
         return { wordTry: wordTry, result: result };
     };
-    //actualizamos el atributo
     GameModel.prototype.isWinner = function () {
         return this.winner;
     };
-    //cuando supera los intentos --> LOSER
     GameModel.prototype.isLoser = function () {
         return this.currentTurn > MAX_ATTEMPTS;
-    };
-    GameModel.prototype.getWordTarget = function () {
-        return this.wordTarget;
     };
     GameModel.prototype.getTurn = function () {
         return this.currentTurn;
     };
     GameModel.prototype.getPosition = function () {
-        return this.currentTry.length;
+        return this.currentPosition;
+    };
+    GameModel.prototype.getWordTarget = function () {
+        return this.wordTarget;
     };
     return GameModel;
 }());

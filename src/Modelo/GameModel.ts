@@ -7,6 +7,7 @@ export class GameModel {
     private wordEvaluator: WordEvaluator;
     private currentTurn: number = 1;
     private currentTry: string = "";
+    private currentPosition: number = 0;  
     private winner: boolean = false;
     private wordTarget: string;
 
@@ -15,24 +16,48 @@ export class GameModel {
         this.wordTarget = wordTarget; 
     }
 
-    //Miro a ver si puedo añadir letra y si se puede la añado 
     addLetterTry(letter: string): void{
-        if (this.currentTry.length < MAX_WORD_SIZE){
-            this.currentTry += letter;
+
+        if (this.currentPosition < MAX_WORD_SIZE){
+
+            if (this.currentPosition < this.currentTry.length){
+                this.currentTry =
+                    this.currentTry.substring(0, this.currentPosition) +
+                    letter +
+                    this.currentTry.substring(this.currentPosition + 1);
+            } else {
+                this.currentTry += letter;
+            }
+
+            this.currentPosition++;
+        }
+    }
+
+    deleteLetter(): void{
+
+        if (this.currentPosition < this.currentTry.length){
+
+            this.currentTry =
+                this.currentTry.substring(0, this.currentPosition) +
+                this.currentTry.substring(this.currentPosition + 1);
+
+        }
+        else if (this.currentPosition > 0){
+
+            this.currentPosition--;
+
+            this.currentTry =
+                this.currentTry.substring(0, this.currentPosition);
         }
     }
 
 
-    //eliminamos la letra directamente
-    deleteLetter(): void{
-        this.currentTry = this.currentTry.slice(0, -1);
+    setPosition(position: number): void{
+        this.currentPosition = position;
     }
 
-    // Miramos si coinciden la longitud de las palabras (sino NULL)
-    // Si coinciden las palabras --> WINNER
-    // Actualizamos el intento y el turno
-    // Devolvemos la tupla del intento y el resultado para que la UI pueda pintar las letras
     enterTry(): { wordTry: string, result: LetterState[] } | null {
+
         if (this.currentTry.length != MAX_WORD_SIZE){
             return null;
         }
@@ -46,22 +71,17 @@ export class GameModel {
 
         this.currentTurn++;
         this.currentTry = "";
+        this.currentPosition = 0; 
 
         return {wordTry, result};
     }
 
-    //actualizamos el atributo
     isWinner(): boolean{
         return this.winner;
     }
 
-    //cuando supera los intentos --> LOSER
     isLoser(): boolean{
         return this.currentTurn > MAX_ATTEMPTS;
-    }
-
-    getWordTarget(): string{
-        return this.wordTarget;
     }
 
     getTurn(): number{
@@ -69,6 +89,10 @@ export class GameModel {
     }
 
     getPosition(): number{
-        return this.currentTry.length;
+        return this.currentPosition;
+    }
+
+    getWordTarget(): string{
+        return this.wordTarget;
     }
 }

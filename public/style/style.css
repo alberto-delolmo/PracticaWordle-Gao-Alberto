@@ -128,3 +128,7 @@ h1 {
 .key-grey{
     background-color: #787c7e;
 }
+
+.active {
+    border: 2px solid black;
+}
