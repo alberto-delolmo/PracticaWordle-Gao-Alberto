@@ -10,6 +10,7 @@ var gamePresenter = new GamePresenter();
 var gameModel = new GameModel(pickedWord.toString());
 var gameView = new GameView();
 var gameController = new GameController(gameModel, gameView, gamePresenter);
+sessionStorage.setItem("pickedWordString", pickedWord.toString());
 document.addEventListener("keydown", function (e) {
     gameController.newKeyPressed(e.code);
 });
