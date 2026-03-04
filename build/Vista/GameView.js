@@ -39,13 +39,13 @@ var GameView = /** @class */ (function () {
     GameView.prototype.paintKeyBoard = function (letter, state) {
         var button = document.querySelector("button[value=Key" + letter.toUpperCase() + "]");
         if (button != null) {
-            var currentState = button.getAttribute("data-state");
+            var currentState = button.getAttribute("state");
             if (this.hasToChange(currentState, state)) {
-                button.classList.remove("cell-green");
-                button.classList.remove("cell-orange");
-                button.classList.remove("cell-grey");
+                button.classList.remove("key-green");
+                button.classList.remove("key-orange");
+                button.classList.remove("key-grey");
                 var newState = this.getKeyState(state);
-                button.classList.add("cell-" + newState);
+                button.classList.add("key-" + newState);
                 button.setAttribute("state", newState);
             }
         }

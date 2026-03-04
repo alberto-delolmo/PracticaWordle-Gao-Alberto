@@ -116,3 +116,15 @@ h1 {
     background-color: #787C7E;
     color: #ffffff;
 }
+
+.key-green{
+    background-color: #6aaa64;
+}
+
+.key-orange{
+    background-color: #c9b459;
+}
+
+.key-grey{
+    background-color: #787c7e;
+}
