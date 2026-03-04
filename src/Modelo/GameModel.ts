@@ -71,6 +71,4 @@ export class GameModel {
     getPosition(): number{
         return this.currentTry.length;
     }
-
-
 }

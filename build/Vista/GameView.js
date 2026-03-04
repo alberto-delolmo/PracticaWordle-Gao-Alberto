@@ -44,8 +44,20 @@ var GameView = /** @class */ (function () {
                 button.classList.remove("key-green");
                 button.classList.remove("key-orange");
                 button.classList.remove("key-grey");
-                var newState = this.getKeyState(state);
-                button.classList.add("key-" + newState);
+                var newState = void 0;
+                switch (state) {
+                    case (LetterState.Correct):
+                        button.classList.add("key-green");
+                        newState = "correct";
+                        break;
+                    case (LetterState.Misplaced):
+                        button.classList.add("key-orange");
+                        newState = "misplaced";
+                        break;
+                    default:
+                        button.classList.add("key-grey");
+                        newState = "wrong";
+                }
                 button.setAttribute("state", newState);
             }
         }
