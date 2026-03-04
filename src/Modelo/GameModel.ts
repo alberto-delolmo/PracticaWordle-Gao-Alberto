@@ -1,6 +1,6 @@
-import { MAX_ATTEMPTS, MAX_WORD_SIZE } from "../env.js";
-import { LetterState } from "./LetterState.js";
-import { WordEvaluator } from "./WordEvaluator.js"
+import { MAX_ATTEMPTS, MAX_WORD_SIZE } from "../env";
+import { LetterState } from "./LetterState";
+import { WordEvaluator } from "./WordEvaluator"
 
 export class GameModel {
 
@@ -9,44 +9,6 @@ export class GameModel {
     private currentTry: string = "";
     private winner: boolean = false;
     private wordTarget: string;
-
-<<<<<<< HEAD
-=======
-    
-    public getWordEvaluator(): WordEvaluator {
-        return this.wordEvaluator;
-    }
-
-    public setWordEvaluator(value: WordEvaluator): void {
-        this.wordEvaluator = value;
-    }
-
-    public getCurrentTurn(): number {
-        return this.currentTurn;
-    }
-
-    public setCurrentTurn(value: number): void {
-        this.currentTurn = value;
-    }
-
-    public getCurrentTry(): string {
-        return this.currentTry;
-    }
-
-    public setCurrentTry(value: string): void {
-        this.currentTry = value;
-    }
-
-    // wordTarget
-    public getWordTarget(): string {
-        return this.wordTarget;
-    }
-
-    public setWordTarget(value: string): void {
-        this.wordTarget = value;
-    }
-
->>>>>>> e5866a2fd642deed6b90e87100c54266978966cb
 
     constructor (wordTarget: string){
         this.wordEvaluator = new WordEvaluator();
@@ -97,8 +59,6 @@ export class GameModel {
     isLoser(): boolean{
         return this.currentTurn > MAX_ATTEMPTS;
     }
-
-
 
 
 }
