@@ -97,6 +97,7 @@ export class GameController {
      * Metodo para cuando es presionado borrar, si la posicion es mayor que cero borra la ultima letra y regresa una posicion.
      */
     backspacePressed():void{
+        console.log("Elimina la posicion " + this.game.getPosition);
         this.game.deleteLetter();
         this.view.deleteLetter(this.game.getTurn(), this.game.getPosition());
     }
