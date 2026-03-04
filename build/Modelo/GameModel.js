@@ -1,5 +1,5 @@
-import { MAX_ATTEMPTS, MAX_WORD_SIZE } from "../env.js";
-import { WordEvaluator } from "./WordEvaluator.js";
+import { MAX_ATTEMPTS, MAX_WORD_SIZE } from "../env";
+import { WordEvaluator } from "./WordEvaluator";
 var GameModel = /** @class */ (function () {
     function GameModel(wordTarget) {
         this.currentTurn = 1;
@@ -8,7 +8,6 @@ var GameModel = /** @class */ (function () {
         this.wordEvaluator = new WordEvaluator();
         this.wordTarget = wordTarget;
     }
-
     //Miro a ver si puedo añadir letra y si se puede la añado 
     GameModel.prototype.addLetterTry = function (letter) {
         if (this.currentTry.length < MAX_WORD_SIZE) {
@@ -43,6 +42,15 @@ var GameModel = /** @class */ (function () {
     //cuando supera los intentos --> LOSER
     GameModel.prototype.isLoser = function () {
         return this.currentTurn > MAX_ATTEMPTS;
+    };
+    GameModel.prototype.getWordTarget = function () {
+        return this.wordTarget;
+    };
+    GameModel.prototype.getTurn = function () {
+        return this.currentTurn;
+    };
+    GameModel.prototype.getPosition = function () {
+        return this.currentTry.length;
     };
     return GameModel;
 }());
