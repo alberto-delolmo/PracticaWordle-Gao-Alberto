@@ -13,3 +13,6 @@ var gameController = new GameController(gameModel, gameView, gamePresenter);
 document.addEventListener("keydown", function (e) {
     gameController.newKeyPressed(e.code);
 });
+Array.from(document.getElementsByClassName("key")).forEach(function (element) { return element.addEventListener("click", function (e) {
+    gameController.newKeyPressed(e.target.value);
+}); });

@@ -21,3 +21,7 @@ document.addEventListener("keydown", (e) =>{
 })
 
 
+Array.from(document.getElementsByClassName("key")).forEach(element => element.addEventListener("click", (e)=>{
+    gameController.newKeyPressed((<HTMLButtonElement>e.target).value);
+}));
+
