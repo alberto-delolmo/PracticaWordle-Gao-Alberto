@@ -41,11 +41,11 @@ var GameView = /** @class */ (function () {
         if (button != null) {
             var currentState = button.getAttribute("data-state");
             if (this.hasToChange(currentState, state)) {
-                button.classList.remove("key-green");
-                button.classList.remove("key-yellow");
-                button.classList.remove("key-grey");
+                button.classList.remove("cell-green");
+                button.classList.remove("cell-orange");
+                button.classList.remove("cell-grey");
                 var newState = this.getKeyState(state);
-                button.classList.add("key-" + newState);
+                button.classList.add("cell-" + newState);
                 button.setAttribute("state", newState);
             }
         }
@@ -56,7 +56,7 @@ var GameView = /** @class */ (function () {
             return "cell-green";
         }
         if (state == LetterState.Misplaced) {
-            return "cell-yellow";
+            return "cell-orange";
         }
         return "cell-grey";
     };

@@ -1,4 +1,4 @@
-import { LetterState } from "./LetterState";
+import { LetterState } from "./LetterState.js";
 var WordEvaluator = /** @class */ (function () {
     function WordEvaluator() {
     }

@@ -50,12 +50,12 @@ export class GameView {
             const currentState = button.getAttribute("data-state") as KeyState | null;
 
             if (this.hasToChange(currentState, state)){
-                button.classList.remove("key-green");
-                button.classList.remove("key-yellow");
-                button.classList.remove("key-grey");
+                button.classList.remove("cell-green");
+                button.classList.remove("cell-orange");
+                button.classList.remove("cell-grey");
 
                 let newState = this.getKeyState(state);
-                button.classList.add("key-"+newState);
+                button.classList.add("cell-"+newState);
                 button.setAttribute("state", newState);
             }
         }
@@ -67,7 +67,7 @@ export class GameView {
             return "cell-green";
         }
         if(state == LetterState.Misplaced){
-            return "cell-yellow";
+            return "cell-orange";
         }
         return "cell-grey";
     }
