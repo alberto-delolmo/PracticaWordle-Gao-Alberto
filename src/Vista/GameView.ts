@@ -53,9 +53,27 @@ export class GameView {
                 button.classList.remove("key-green");
                 button.classList.remove("key-orange");
                 button.classList.remove("key-grey");
+                
 
-                let newState = this.getKeyState(state);
-                button.classList.add("key-"+newState);
+                let newState: KeyState;
+                switch(state){
+                    case(LetterState.Correct):
+                        button.classList.add("key-green");
+                        newState = "correct";
+                        break;
+                    
+
+                    case(LetterState.Misplaced):
+                        button.classList.add("key-orange");
+                        newState = "misplaced";
+                        break;
+                    
+
+                    default:
+                        button.classList.add("key-grey");
+                        newState = "wrong";
+                }
+
                 button.setAttribute("state", newState);
             }
         }
