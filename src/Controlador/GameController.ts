@@ -1,4 +1,6 @@
 import {GameModel} from "../Modelo/GameModel.js";
+import { GamePresenter } from "../Vista/GamePresenter.js";
+import { GameView } from "../Vista/GameView.js";
 
 
 
@@ -6,6 +8,8 @@ export class GameController {
     private _validLetterCodes: string[] = ["KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "KeyA",
          "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Semicolon"];
     private game: GameModel;
+    private view: GameView;
+    private presenter: GamePresenter;
 
     public getGame(): GameModel {
         return this.game;
@@ -14,13 +18,16 @@ export class GameController {
         this.game = value;
     }
 
-    constructor(game: GameModel){
+    constructor(game: GameModel, view: GameView, presenter: GamePresenter){
         this.game = game;
+        this.view = view;
+        this.presenter = presenter;
     }
 
     newLetter(code: string): void {
         let letter = this.transformCodeToLetter(code);
         this.game.addLetterTry(letter);
+        this.view.setLetter(this.game.getTurn(), this.game.getPosition() - 1, letter);
     }
 
     /**
@@ -72,13 +79,16 @@ export class GameController {
             return null;
         }
 
-        const status = this.checkGameStatus();
+        const {wordTry, result} = evaluation;
 
-        return {
-            wordTry: evaluation.wordTry,
-            result: evaluation.result,
-            status: status
-        };
+        result.forEach((state, index) =>{
+            const letter = wordTry[index];
+
+            this.view.paintCell(this.game.getTurn()-1, index, state);
+            this.view.paintKeyBoard(letter, state);
+        });
+
+        this.checkGameStatus();
     }
 
 
@@ -88,6 +98,7 @@ export class GameController {
      */
     backspacePressed():void{
         this.game.deleteLetter();
+        this.view.deleteLetter(this.game.getTurn(), this.game.getPosition());
     }
     /**
      * Metodo para cuando es presionado una tecla, comprueba si es una letra valido, si es el enter o si es el backspace.
@@ -107,11 +118,10 @@ export class GameController {
 
     checkGameStatus() {
         if (this.game.isWinner()) {
-            return "WINNER";
+            this.presenter.goToWinner();
         }
         if (this.game.isLoser()) {
-            return "LOSER";
+            this.presenter.goToLoser();
         }
-        return "CONTINUE";
     }
 }
