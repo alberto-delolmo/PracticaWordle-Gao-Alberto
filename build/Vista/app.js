@@ -6,7 +6,11 @@ import { GameView } from "./GameView.js";
 init();
 function init() {
     var repository = WordRepository.getInstance();
-    var pickedWord = repository.getRandomWord();
+    var pickedWord = sessionStorage.getItem("pickedWordString");
+    if (!pickedWord) {
+        pickedWord = repository.getRandomWord();
+        sessionStorage.setItem("pickedWordString", pickedWord);
+    }
     console.log(pickedWord);
     var presenter = new GamePresenter();
     var model = new GameModel(pickedWord);

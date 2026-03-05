@@ -9,7 +9,12 @@ init();
 function init(){
     const repository = WordRepository.getInstance();
 
-    const pickedWord: string = repository.getRandomWord();
+    let pickedWord = sessionStorage.getItem("pickedWordString");
+
+    if (!pickedWord) {
+        pickedWord = repository.getRandomWord();
+        sessionStorage.setItem("pickedWordString", pickedWord);
+    }
 
     console.log(pickedWord);
 
