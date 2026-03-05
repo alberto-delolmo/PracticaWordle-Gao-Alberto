@@ -4,15 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+
     <title>Derrota</title>
 </head>
-<body>
-    <h1>HAS PALMADO</h1>
-    <h2 id="lose_message"></h2>
-    <p><a href="./index.html">Volver a jugar</a></p>
 
-    <script>
-        document.getElementById("lose_message").textContent = `La palabra era: ${sessionStorage.getItem("pickedWordString")}`;
-    </script>
+<body>
+
+<header>
+    <h1>WORDLE</h1>
+</header>
+
+<div class="winner-container">
+
+    <h2 class="winner-title">💀 HAS PERDIDO 💀</h2>
+
+    <p id="lose_message"></p>
+
+    <button class="play-again-btn" onclick="sessionStorage.removeItem('pickedWordString'); location.href='index.html'">
+        Volver a jugar
+    </button>
+</div>
+<script type="module" src="/build/Vista/app.js"></script>
 </body>
 </html>

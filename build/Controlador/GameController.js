@@ -35,22 +35,6 @@ var GameController = /** @class */ (function () {
         this.view.setLetter(this.game.getTurn(), positionBefore, letter);
         this.moveCursorVisual();
     };
-    /*backspacePressed(): void {
-
-        const positionBefore = this.game.getPosition();
-
-        if (positionBefore > 0) {
-
-            this.game.deleteLetter();
-
-            this.view.deleteLetter(
-                this.game.getTurn(),
-                positionBefore - 1
-            );
-
-            this.moveCursorVisual();
-        }
-    }*/
     GameController.prototype.backspacePressed = function () {
         var currentPosition = this.game.getPosition();
         if (currentPosition < this.game.getWordTarget().length) {
@@ -105,7 +89,7 @@ var GameController = /** @class */ (function () {
         if (this.game.isWinner()) {
             this.presenter.goToWinner();
         }
-        if (this.game.isLoser()) {
+        else if (this.game.isLoser()) {
             this.presenter.goToLoser();
         }
     };
