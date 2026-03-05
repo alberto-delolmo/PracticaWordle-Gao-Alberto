@@ -180,3 +180,32 @@ h1 {
     font-weight: bold;
     font-size: 1.6rem;
 }
+
+.key{
+    transition: all .15s ease;
+}
+
+.key:hover{
+    transform: scale(1.08);
+}
+
+.winner-container{
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    height: 80vh;
+    text-align: center;
+
+    animation: fadeIn .6s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform: translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform: translateY(0);
+    }
+}
