@@ -20,11 +20,10 @@
 
     <h2 class="winner-title">🎉 ¡HAS GANADO! 🎉</h2>
 
-    <button class="play-again-btn" onclick="location.href='index.html'">
+    <button class="play-again-btn" onclick="sessionStorage.removeItem('pickedWordString'); location.href='index.html'">
         Volver a jugar
     </button>
-
 </div>
-
+<script type="module" src="/build/Vista/app.js"></script>
 </body>
 </html>

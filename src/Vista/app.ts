@@ -21,8 +21,15 @@ document.addEventListener("keydown", (e) =>{
     gameController.newKeyPressed(e.code);
 })
 
-
 Array.from(document.getElementsByClassName("key")).forEach(element => element.addEventListener("click", (e)=>{
     gameController.newKeyPressed((<HTMLButtonElement>e.target).value);
 }));
 
+const loseMessage = document.getElementById("lose_message");
+
+if (loseMessage) {
+    const palabra = sessionStorage.getItem("pickedWordString");
+
+    loseMessage.innerHTML =
+        `La palabra era: <span class="lose-word">${palabra}</span>`;
+}

@@ -22,18 +22,10 @@
 
     <p id="lose_message"></p>
 
-    <button class="play-again-btn" onclick="location.href='index.html'">
+    <button class="play-again-btn" onclick="sessionStorage.removeItem('pickedWordString'); location.href='index.html'">
         Volver a jugar
     </button>
-
 </div>
-
-<script>
-    const palabra = sessionStorage.getItem("pickedWordString");
-
-    document.getElementById("lose_message").innerHTML =
-        `La palabra era: <span class="lose-word">${palabra}</span>`;
-</script>
-
+<script type="module" src="/build/Vista/app.js"></script>
 </body>
 </html>
