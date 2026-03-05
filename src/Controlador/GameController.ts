@@ -22,40 +22,52 @@ export class GameController {
         this.view.initializeCellClicks(this.game);
     }
 
+    newKeyPressed(code: string): void{
 
-    newLetter(code: string): void {
+        if (this.isValidLetter(code)){
+            this.addLetter(code);
+        }
+        else if (this.isEnterKey(code)){
+            this.enterPressed();
+        }
+        else if (this.isBackspaceKey(code)){
+            this.backspacePressed();
+        }
+    }
+
+    private addLetter(code: string): void {
 
         const letter = this.transformCodeToLetter(code);
-
-        const positionBefore = this.game.getPosition();
+        const position = this.game.getPosition();
 
         this.game.addLetterTry(letter);
 
         this.view.setLetter(
             this.game.getTurn(),
-            positionBefore,
+            position,
             letter
         );
 
         this.view.moveCursorVisual(this.game);
     }
 
-    backspacePressed ( ) : void { 
+    private backspacePressed ( ) : void { 
 
         const currentPosition = this.game.getPosition(); 
         if ( currentPosition < this.game.getWordTarget().length) { 
+
             this.game.deleteLetter(); 
             this.view.deleteLetter(this.game.getTurn(),currentPosition);
+
         } else if ( currentPosition > 0 ) {
+
             this.game.deleteLetter(); 
             this.view.deleteLetter( this.game.getTurn(), currentPosition - 1); 
         }     
         this.view.moveCursorVisual(this.game);
     } 
 
-        
-
-    enterPressed() {
+    private enterPressed() {
 
         const evaluation = this.game.enterTry();
 
@@ -74,44 +86,28 @@ export class GameController {
         this.checkGameStatus();
     }
 
-
-    newKeyPressed(code: string){
-
-        if (this.isValidLetter(code)){
-            this.newLetter(code);
-        }
-        else if (this.isEnterKey(code)){
-            this.enterPressed();
-        }
-        else if (this.isBackspaceKey(code)){
-            this.backspacePressed();
-        }
-    }
-
-    isValidLetter(code: string): boolean {
+    private isValidLetter(code: string): boolean {
         return this._validLetterCodes.includes(code);
     }
 
-    isEnterKey(code: string): boolean {
+    private isEnterKey(code: string): boolean {
         return code === "Enter";
     }
 
-    isBackspaceKey(code: string): boolean {
+    private isBackspaceKey(code: string): boolean {
         return code === "Backspace";
     }
 
-    transformCodeToLetter(code: string): string {
+    private transformCodeToLetter(code: string): string {
         if (code === "Semicolon") return "Ñ";
         return code.split("y")[1];
     }
 
-    checkGameStatus() {
+    private checkGameStatus(): void {
         if (this.game.isWinner()) {
             this.presenter.goToWinner();
         }else if(this.game.isLoser()){
             this.presenter.goToLoser();
         }
     }
-
-    
 }

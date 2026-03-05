@@ -7,23 +7,23 @@ import { GameView } from "./GameView.js";
 init();
 
 function init(){
-    const wordsCollection = WordRepository.getInstance();
+    const repository = WordRepository.getInstance();
 
-    const pickedWord: string = wordsCollection.getRandomWord();
+    const pickedWord: string = repository.getRandomWord();
 
     console.log(pickedWord);
 
-    const gamePresenter: GamePresenter = new GamePresenter();
-    const gameModel: GameModel = new GameModel(pickedWord);
-    const gameView: GameView = new GameView();
-    const gameController: GameController = new GameController(gameModel, gameView, gamePresenter);
+    const presenter: GamePresenter = new GamePresenter();
+    const model: GameModel = new GameModel(pickedWord);
+    const view: GameView = new GameView();
+    const controller: GameController = new GameController(model, view, presenter);
 
-    setKeyboardListener(gameController);
-    setScreenKeyboardListener(gameController);
+    addKeyboardListener(controller);
+    addScreenKeyboardListener(controller);
     setLoseMessage(pickedWord);
 }
 
-function setKeyboardListener(gameController: GameController){
+function addKeyboardListener(gameController: GameController){
     document.addEventListener("keydown", (e) =>{
 
         if (e.code === "Enter" || e.code === "Backspace" || e.code.startsWith("Key")){
@@ -34,19 +34,19 @@ function setKeyboardListener(gameController: GameController){
     });
 }
 
-function setScreenKeyboardListener(gameController: GameController){
+function addScreenKeyboardListener(gameController: GameController){
     Array.from(document.getElementsByClassName("key")).
     forEach(element => element.addEventListener("click", (e)=>{
         gameController.newKeyPressed((<HTMLButtonElement>e.target).value);
     }));
 }
 
-function setLoseMessage(pickedWord: string){
+function setLoseMessage(word: string){
     const loseMessage = document.getElementById("lose_message");
 
     if (loseMessage) {
         loseMessage.innerHTML =
-            `La palabra era: <span class="lose-word">${pickedWord}</span>`;
+            `La palabra era: <span class="lose-word">${word}</span>`;
     }
 }
 
