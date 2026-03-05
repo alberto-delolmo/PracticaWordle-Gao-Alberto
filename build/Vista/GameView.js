@@ -2,6 +2,36 @@ import { LetterState } from "../Modelo/LetterState.js";
 var GameView = /** @class */ (function () {
     function GameView() {
     }
+    GameView.prototype.initializeCellClicks = function (game) {
+        var rows = document.querySelectorAll(".row");
+        rows.forEach(function (row, rowIndex) {
+            var cells = row.querySelectorAll(".cell");
+            cells.forEach(function (cell, colIndex) {
+                cell.addEventListener("click", function () {
+                    if (rowIndex + 1 === game.getTurn()) {
+                        document.querySelectorAll(".cell").forEach(function (c) {
+                            return c.classList.remove("active");
+                        });
+                        cell.classList.add("active");
+                        game.setPosition(colIndex);
+                    }
+                });
+            });
+        });
+    };
+    GameView.prototype.moveCursorVisual = function (game) {
+        document.querySelectorAll(".cell").forEach(function (c) {
+            return c.classList.remove("active");
+        });
+        var row = document.getElementById("row_" + game.getTurn());
+        if (!row)
+            return;
+        var cells = row.querySelectorAll(".cell");
+        var pos = game.getPosition();
+        if (pos < cells.length) {
+            cells[pos].classList.add("active");
+        }
+    };
     //Busca la celda de la posición y número y la devuelve
     // Si no está, es null
     GameView.prototype.getCell = function (turn, position) {

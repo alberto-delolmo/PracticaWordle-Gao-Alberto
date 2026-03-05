@@ -1,4 +1,4 @@
-import { MAX_ATTEMPTS, MAX_WORD_SIZE } from "../env.js";
+import { MAX_ATTEMPTS, MAX_WORD_SIZE } from "../Aplicacion/env.js";
 import { WordEvaluator } from "./WordEvaluator.js";
 var GameModel = /** @class */ (function () {
     function GameModel(wordTarget) {

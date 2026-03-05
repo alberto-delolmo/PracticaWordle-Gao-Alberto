@@ -8,6 +8,6 @@ export class GamePresenter {
 
     goToLoser(): void {
         location.assign("/loser");
-        document.getElementById("lose_message")!.textContent = `La palabra era: ${sessionStorage.getItem("pickedWord")}`;
+        
     }
 }

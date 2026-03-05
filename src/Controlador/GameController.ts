@@ -19,36 +19,7 @@ export class GameController {
         this.view = view;
         this.presenter = presenter;
 
-        this.initializeCellClicks();
-    }
-
-
-    private initializeCellClicks(): void {
-
-        const rows = document.querySelectorAll(".row");
-
-        rows.forEach((row, rowIndex) => {
-
-            const cells = row.querySelectorAll(".cell");
-
-            cells.forEach((cell, colIndex) => {
-
-                cell.addEventListener("click", () => {
-
-                    if (rowIndex + 1 === this.game.getTurn()) {
-
-                        document.querySelectorAll(".cell").forEach(c =>
-                            c.classList.remove("active")
-                        );
-
-                        cell.classList.add("active");
-
-                        this.game.setPosition(colIndex);
-                    }
-                });
-
-            });
-        });
+        this.view.initializeCellClicks(this.game);
     }
 
 
@@ -66,7 +37,7 @@ export class GameController {
             letter
         );
 
-        this.moveCursorVisual();
+        this.view.moveCursorVisual(this.game);
     }
 
     backspacePressed ( ) : void { 
@@ -79,10 +50,8 @@ export class GameController {
             this.game.deleteLetter(); 
             this.view.deleteLetter( this.game.getTurn(), currentPosition - 1); 
         }     
-        this.moveCursorVisual();
+        this.view.moveCursorVisual(this.game);
     } 
-
-    
 
         
 
@@ -144,22 +113,5 @@ export class GameController {
         }
     }
 
-    private moveCursorVisual(): void {
-
-        document.querySelectorAll(".cell").forEach(c =>
-            c.classList.remove("active")
-        );
-
-        const row = document.getElementById("row_" + this.game.getTurn());
-
-        if (!row) return;
-
-        const cells = row.querySelectorAll(".cell");
-
-        const pos = this.game.getPosition();
-
-        if (pos < cells.length) {
-            cells[pos].classList.add("active");
-        }
-    }
+    
 }

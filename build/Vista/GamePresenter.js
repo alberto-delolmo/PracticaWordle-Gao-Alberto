@@ -6,7 +6,6 @@ var GamePresenter = /** @class */ (function () {
     };
     GamePresenter.prototype.goToLoser = function () {
         location.assign("/loser");
-        document.getElementById("lose_message").textContent = "La palabra era: ".concat(sessionStorage.getItem("pickedWord"));
     };
     return GamePresenter;
 }());
