@@ -5,18 +5,22 @@ import { GamePresenter } from "./GamePresenter.js";
 import { GameView } from "./GameView.js";
 init();
 function init() {
-    var wordsCollection = WordRepository.getInstance();
-    var pickedWord = wordsCollection.getRandomWord();
+    var repository = WordRepository.getInstance();
+    var pickedWord = sessionStorage.getItem("pickedWordString");
+    if (!pickedWord) {
+        pickedWord = repository.getRandomWord();
+        sessionStorage.setItem("pickedWordString", pickedWord);
+    }
     console.log(pickedWord);
-    var gamePresenter = new GamePresenter();
-    var gameModel = new GameModel(pickedWord);
-    var gameView = new GameView();
-    var gameController = new GameController(gameModel, gameView, gamePresenter);
-    setKeyboardListener(gameController);
-    setScreenKeyboardListener(gameController);
+    var presenter = new GamePresenter();
+    var model = new GameModel(pickedWord);
+    var view = new GameView();
+    var controller = new GameController(model, view, presenter);
+    addKeyboardListener(controller);
+    addScreenKeyboardListener(controller);
     setLoseMessage(pickedWord);
 }
-function setKeyboardListener(gameController) {
+function addKeyboardListener(gameController) {
     document.addEventListener("keydown", function (e) {
         if (e.code === "Enter" || e.code === "Backspace" || e.code.startsWith("Key")) {
             e.preventDefault();
@@ -24,16 +28,16 @@ function setKeyboardListener(gameController) {
         gameController.newKeyPressed(e.code);
     });
 }
-function setScreenKeyboardListener(gameController) {
+function addScreenKeyboardListener(gameController) {
     Array.from(document.getElementsByClassName("key")).
         forEach(function (element) { return element.addEventListener("click", function (e) {
         gameController.newKeyPressed(e.target.value);
     }); });
 }
-function setLoseMessage(pickedWord) {
+function setLoseMessage(word) {
     var loseMessage = document.getElementById("lose_message");
     if (loseMessage) {
         loseMessage.innerHTML =
-            "La palabra era: <span class=\"lose-word\">".concat(pickedWord, "</span>");
+            "La palabra era: <span class=\"lose-word\">".concat(word, "</span>");
     }
 }

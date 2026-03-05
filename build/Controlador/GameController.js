@@ -10,11 +10,22 @@ var GameController = /** @class */ (function () {
         this.presenter = presenter;
         this.view.initializeCellClicks(this.game);
     }
-    GameController.prototype.newLetter = function (code) {
+    GameController.prototype.newKeyPressed = function (code) {
+        if (this.isValidLetter(code)) {
+            this.addLetter(code);
+        }
+        else if (this.isEnterKey(code)) {
+            this.enterPressed();
+        }
+        else if (this.isBackspaceKey(code)) {
+            this.backspacePressed();
+        }
+    };
+    GameController.prototype.addLetter = function (code) {
         var letter = this.transformCodeToLetter(code);
-        var positionBefore = this.game.getPosition();
+        var position = this.game.getPosition();
         this.game.addLetterTry(letter);
-        this.view.setLetter(this.game.getTurn(), positionBefore, letter);
+        this.view.setLetter(this.game.getTurn(), position, letter);
         this.view.moveCursorVisual(this.game);
     };
     GameController.prototype.backspacePressed = function () {
@@ -41,17 +52,6 @@ var GameController = /** @class */ (function () {
             _this.view.paintKeyBoard(letter, state);
         });
         this.checkGameStatus();
-    };
-    GameController.prototype.newKeyPressed = function (code) {
-        if (this.isValidLetter(code)) {
-            this.newLetter(code);
-        }
-        else if (this.isEnterKey(code)) {
-            this.enterPressed();
-        }
-        else if (this.isBackspaceKey(code)) {
-            this.backspacePressed();
-        }
     };
     GameController.prototype.isValidLetter = function (code) {
         return this._validLetterCodes.includes(code);

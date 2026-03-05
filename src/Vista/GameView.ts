@@ -1,3 +1,4 @@
+import { ColorFactory } from "../Modelo/Colors/ColorFactory.js";
 import { GameModel } from "../Modelo/GameModel.js";
 import { LetterState } from "../Modelo/LetterState.js";
 
@@ -83,7 +84,8 @@ export class GameView {
         if (cell == null){
             return;
         }
-        cell.classList.add(this.getCellClass(state));
+        const color = ColorFactory.create(state);
+        cell.classList.add(color.getCellClass());
     }
 
     paintKeyBoard (letter: string, state: LetterState){
@@ -95,43 +97,10 @@ export class GameView {
             if (this.hasToChange(currentState, state)){
                 button.classList.remove("key-green", "key-orange", "key-grey");
 
-                const newState = this.getKeyState(state);
-                button.classList.add(this.getKeyClass(state));
-                button.setAttribute("state", newState);
+                const color = ColorFactory.create(state);
+                button.classList.add(color.getKeyClass());
+                button.setAttribute("state", color.getKeyState());
             }
-        }
-    }
-
-    private getCellClass(state: LetterState): string{
-        switch (state) {
-            case LetterState.Correct:
-                return "cell-green";
-            case LetterState.Misplaced:
-                return "cell-orange";
-            default:
-                return "cell-grey";
-        }
-    }
-
-    private getKeyClass(state: LetterState): string{
-        switch (state) {
-            case LetterState.Correct:
-                return "key-green";
-            case LetterState.Misplaced:
-                return "key-orange";
-            default:
-                return "key-grey";
-        }
-    }
-
-    private getKeyState(state: LetterState): KeyState{
-        switch (state) {
-            case LetterState.Correct:
-                return "correct";
-            case LetterState.Misplaced:
-                return "misplaced";
-            default:
-                return "wrong";
         }
     }
 
