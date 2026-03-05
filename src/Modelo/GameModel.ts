@@ -4,15 +4,14 @@ import { WordEvaluator } from "./WordEvaluator.js"
 
 export class GameModel {
 
-    private wordEvaluator: WordEvaluator;
-    private currentTurn: number = 1;
-    private currentTry: string = "";
-    private currentPosition: number = 0;  
-    private winner: boolean = false;
+    private wordEvaluator = new WordEvaluator();
+    private currentTurn = 1;
+    private currentTry = "";
+    private currentPosition = 0;  
+    private winner = false;
     private wordTarget: string;
 
     constructor (wordTarget: string){
-        this.wordEvaluator = new WordEvaluator();
         this.wordTarget = wordTarget; 
     }
 
