@@ -89,7 +89,7 @@ var GameController = /** @class */ (function () {
         if (this.game.isWinner()) {
             this.presenter.goToWinner();
         }
-        if (this.game.isLoser()) {
+        else if (this.game.isLoser()) {
             this.presenter.goToLoser();
         }
     };
