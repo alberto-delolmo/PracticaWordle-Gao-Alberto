@@ -1,19 +1,18 @@
-import { Word } from "../Modelo/Word.js";
 
 export class WordRepository {
 
     private static _instance: WordRepository | null = null;
 
-    private wordsCollection: Word[] = [
-        new Word("JUEGO"),
-        new Word("TALAR"),
-        new Word("BAILE"),
-        new Word("ANDAR"),
-        new Word("MONTE"),
-        new Word("PLAYA"),
-        new Word("PLATA"),
-        new Word("ARBOL"),
-        new Word("QUESO")
+    private wordsCollection: string[] = [
+        "JUEGO",
+        "TALAR",
+        "BAILE",
+        "ANDAR",
+        "MONTE",
+        "PLAYA",
+        "PLATA",
+        "ARBOL",
+        "QUESO"
     ];
 
     private constructor() {}
@@ -25,7 +24,7 @@ export class WordRepository {
         return this._instance;
     }
 
-    public getRandomWord(): Word {
+    public getRandomWord(): string {
         const index = Math.floor(Math.random() * this.wordsCollection.length);
         return this.wordsCollection[index];
     }

@@ -1,8 +1,56 @@
+import { GameModel } from "../Modelo/GameModel.js";
 import { LetterState } from "../Modelo/LetterState.js";
 
 type KeyState = "correct" | "misplaced" | "wrong";
 
 export class GameView {
+
+    initializeCellClicks(game: GameModel): void {
+
+        const rows = document.querySelectorAll(".row");
+
+        rows.forEach((row, rowIndex) => {
+
+            const cells = row.querySelectorAll(".cell");
+
+            cells.forEach((cell, colIndex) => {
+
+                cell.addEventListener("click", () => {
+
+                    if (rowIndex + 1 === game.getTurn()) {
+
+                        document.querySelectorAll(".cell").forEach(c =>
+                            c.classList.remove("active")
+                        );
+
+                        cell.classList.add("active");
+
+                        game.setPosition(colIndex);
+                    }
+                });
+
+            });
+        });
+    }
+
+    moveCursorVisual(game: GameModel): void {
+
+        document.querySelectorAll(".cell").forEach(c =>
+            c.classList.remove("active")
+        );
+
+        const row = document.getElementById("row_" + game.getTurn());
+
+        if (!row) return;
+
+        const cells = row.querySelectorAll(".cell");
+
+        const pos = game.getPosition();
+
+        if (pos < cells.length) {
+            cells[pos].classList.add("active");
+        }
+    }
 
     //Busca la celda de la posición y número y la devuelve
     // Si no está, es null

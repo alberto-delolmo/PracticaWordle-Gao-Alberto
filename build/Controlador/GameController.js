@@ -8,32 +8,14 @@ var GameController = /** @class */ (function () {
         this.game = game;
         this.view = view;
         this.presenter = presenter;
-        this.initializeCellClicks();
+        this.view.initializeCellClicks(this.game);
     }
-    GameController.prototype.initializeCellClicks = function () {
-        var _this = this;
-        var rows = document.querySelectorAll(".row");
-        rows.forEach(function (row, rowIndex) {
-            var cells = row.querySelectorAll(".cell");
-            cells.forEach(function (cell, colIndex) {
-                cell.addEventListener("click", function () {
-                    if (rowIndex + 1 === _this.game.getTurn()) {
-                        document.querySelectorAll(".cell").forEach(function (c) {
-                            return c.classList.remove("active");
-                        });
-                        cell.classList.add("active");
-                        _this.game.setPosition(colIndex);
-                    }
-                });
-            });
-        });
-    };
     GameController.prototype.newLetter = function (code) {
         var letter = this.transformCodeToLetter(code);
         var positionBefore = this.game.getPosition();
         this.game.addLetterTry(letter);
         this.view.setLetter(this.game.getTurn(), positionBefore, letter);
-        this.moveCursorVisual();
+        this.view.moveCursorVisual(this.game);
     };
     GameController.prototype.backspacePressed = function () {
         var currentPosition = this.game.getPosition();
@@ -45,7 +27,7 @@ var GameController = /** @class */ (function () {
             this.game.deleteLetter();
             this.view.deleteLetter(this.game.getTurn(), currentPosition - 1);
         }
-        this.moveCursorVisual();
+        this.view.moveCursorVisual(this.game);
     };
     GameController.prototype.enterPressed = function () {
         var _this = this;
@@ -91,19 +73,6 @@ var GameController = /** @class */ (function () {
         }
         else if (this.game.isLoser()) {
             this.presenter.goToLoser();
-        }
-    };
-    GameController.prototype.moveCursorVisual = function () {
-        document.querySelectorAll(".cell").forEach(function (c) {
-            return c.classList.remove("active");
-        });
-        var row = document.getElementById("row_" + this.game.getTurn());
-        if (!row)
-            return;
-        var cells = row.querySelectorAll(".cell");
-        var pos = this.game.getPosition();
-        if (pos < cells.length) {
-            cells[pos].classList.add("active");
         }
     };
     return GameController;

@@ -7,6 +7,7 @@ export class GamePresenter {
     }
 
     goToLoser(): void {
-        location.assign("/loser")
+        location.assign("/loser");
+        
     }
 }
