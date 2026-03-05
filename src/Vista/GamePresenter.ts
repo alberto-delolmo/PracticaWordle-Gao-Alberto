@@ -1,7 +1,5 @@
 export class GamePresenter {
 
-    
-
     goToWinner(): void{
         location.assign("/winner");
     }

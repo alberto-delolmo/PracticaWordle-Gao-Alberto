@@ -19,9 +19,7 @@ export class GameView {
 
                     if (rowIndex + 1 === game.getTurn()) {
 
-                        document.querySelectorAll(".cell").forEach(c =>
-                            c.classList.remove("active")
-                        );
+                        this.clearActiveCells();
 
                         cell.classList.add("active");
 
@@ -35,13 +33,13 @@ export class GameView {
 
     moveCursorVisual(game: GameModel): void {
 
-        document.querySelectorAll(".cell").forEach(c =>
-            c.classList.remove("active")
-        );
+        this.clearActiveCells();
 
         const row = document.getElementById("row_" + game.getTurn());
 
-        if (!row) return;
+        if (row == null){
+            return;
+        } 
 
         const cells = row.querySelectorAll(".cell");
 
@@ -50,6 +48,12 @@ export class GameView {
         if (pos < cells.length) {
             cells[pos].classList.add("active");
         }
+    }
+
+    private clearActiveCells(): void {
+        document.querySelectorAll(".cell").forEach(cell =>
+            cell.classList.remove("active")
+        );
     }
 
     private getCell(turn: number, position: number): Element | null{
@@ -86,57 +90,49 @@ export class GameView {
         const button = document.querySelector("button[value=Key" + letter.toUpperCase() +"]");
 
         if (button != null){
-
             const currentState = button.getAttribute("state") as KeyState | null;
 
             if (this.hasToChange(currentState, state)){
-                button.classList.remove("key-green");
-                button.classList.remove("key-orange");
-                button.classList.remove("key-grey");
-                
+                button.classList.remove("key-green", "key-orange", "key-grey");
 
-                let newState: KeyState;
-                switch(state){
-                    case(LetterState.Correct):
-                        button.classList.add("key-green");
-                        newState = "correct";
-                        break;
-                    
-
-                    case(LetterState.Misplaced):
-                        button.classList.add("key-orange");
-                        newState = "misplaced";
-                        break;
-                    
-
-                    default:
-                        button.classList.add("key-grey");
-                        newState = "wrong";
-                }
-
+                const newState = this.getKeyState(state);
+                button.classList.add(this.getKeyClass(state));
                 button.setAttribute("state", newState);
             }
         }
     }
 
     private getCellClass(state: LetterState): string{
-        if (state == LetterState.Correct){
-            return "cell-green";
+        switch (state) {
+            case LetterState.Correct:
+                return "cell-green";
+            case LetterState.Misplaced:
+                return "cell-orange";
+            default:
+                return "cell-grey";
         }
-        if(state == LetterState.Misplaced){
-            return "cell-orange";
+    }
+
+    private getKeyClass(state: LetterState): string{
+        switch (state) {
+            case LetterState.Correct:
+                return "key-green";
+            case LetterState.Misplaced:
+                return "key-orange";
+            default:
+                return "key-grey";
         }
-        return "cell-grey";
     }
 
     private getKeyState(state: LetterState): KeyState{
-        if (state == LetterState.Correct){
-            return "correct";
+        switch (state) {
+            case LetterState.Correct:
+                return "correct";
+            case LetterState.Misplaced:
+                return "misplaced";
+            default:
+                return "wrong";
         }
-        if (state == LetterState.Misplaced){
-            return "misplaced";
-        }
-        return "wrong";
     }
 
     private hasToChange(currentState: KeyState | null, newState: LetterState): boolean{
@@ -144,11 +140,9 @@ export class GameView {
         if(currentState == null){
             return true;
         }
-
         if (currentState == "correct"){
             return false;
         }
-
         if (currentState == "misplaced" && newState != LetterState.Correct){
             return false;
         }

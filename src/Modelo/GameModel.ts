@@ -53,7 +53,6 @@ export class GameModel {
         }
     }
 
-
     setPosition(position: number): void{
         if(position >= 0 && position < MAX_WORD_SIZE) {
             this.currentPosition = position;
