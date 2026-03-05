@@ -2,11 +2,11 @@ import { MAX_ATTEMPTS, MAX_WORD_SIZE } from "../Aplicacion/env.js";
 import { WordEvaluator } from "./WordEvaluator.js";
 var GameModel = /** @class */ (function () {
     function GameModel(wordTarget) {
+        this.wordEvaluator = new WordEvaluator();
         this.currentTurn = 1;
         this.currentTry = "";
         this.currentPosition = 0;
         this.winner = false;
-        this.wordEvaluator = new WordEvaluator();
         this.wordTarget = wordTarget;
     }
     GameModel.prototype.addLetterTry = function (letter) {
