@@ -32,8 +32,6 @@ var GameView = /** @class */ (function () {
             cells[pos].classList.add("active");
         }
     };
-    //Busca la celda de la posición y número y la devuelve
-    // Si no está, es null
     GameView.prototype.getCell = function (turn, position) {
         var row = document.getElementById("row_" + turn);
         if (row == null) {
@@ -41,21 +39,18 @@ var GameView = /** @class */ (function () {
         }
         return row.children[position];
     };
-    //Cambia la letra de la celda en la que está
     GameView.prototype.setLetter = function (turn, position, letter) {
         var cell = this.getCell(turn, position);
         if (cell != null) {
             cell.textContent = letter;
         }
     };
-    //elimina la letra de la celda en la que está
     GameView.prototype.deleteLetter = function (turn, position) {
         var cell = this.getCell(turn, position);
         if (cell != null) {
             cell.textContent = "";
         }
     };
-    //Pinta la celda de acuerdo con el state indicado
     GameView.prototype.paintCell = function (turn, position, state) {
         var cell = this.getCell(turn, position);
         if (cell == null) {
@@ -63,9 +58,6 @@ var GameView = /** @class */ (function () {
         }
         cell.classList.add(this.getCellClass(state));
     };
-    //Busca el elemento con la key indicada en todo el documento HTML, llama a método hasToChange,
-    //comprueba si debe cambiar el state y lo cambia o no, actualizando su estado para futuros 
-    // cambios de letra
     GameView.prototype.paintKeyBoard = function (letter, state) {
         var button = document.querySelector("button[value=Key" + letter.toUpperCase() + "]");
         if (button != null) {
@@ -92,7 +84,6 @@ var GameView = /** @class */ (function () {
             }
         }
     };
-    //Convierte el estado en el color de la celda para usar el css
     GameView.prototype.getCellClass = function (state) {
         if (state == LetterState.Correct) {
             return "cell-green";
@@ -102,7 +93,6 @@ var GameView = /** @class */ (function () {
         }
         return "cell-grey";
     };
-    //Convierte el estado en el string que lo representa
     GameView.prototype.getKeyState = function (state) {
         if (state == LetterState.Correct) {
             return "correct";
@@ -112,7 +102,6 @@ var GameView = /** @class */ (function () {
         }
         return "wrong";
     };
-    //Comprueba si debe cambiar o no el estado de la letra aplicando lógica y prioridad
     GameView.prototype.hasToChange = function (currentState, newState) {
         if (currentState == null) {
             return true;

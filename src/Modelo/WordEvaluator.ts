@@ -1,6 +1,7 @@
 import { LetterState } from "./LetterState.js";
 
 export class WordEvaluator {
+    
 
     evaluate(wordTry: string, wordTarget: string): LetterState[] {
         const result: LetterState[] = new Array(wordTry.length);
@@ -15,10 +16,12 @@ export class WordEvaluator {
 
         
         for (let i = 0 ; i < wordTry.length; i++){
+
             if (result[i] == LetterState.Correct){
                 continue;
             }
             const index = targetLetters.indexOf(wordTry[i]);
+            
             
             if (index != -1) {
                 result[i] = LetterState.Misplaced;
