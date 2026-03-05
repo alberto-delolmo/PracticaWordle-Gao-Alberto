@@ -5,12 +5,12 @@ import { GamePresenter } from "./GamePresenter.js";
 import { GameView } from "./GameView.js";
 var wordsCollection = WordRepository.getInstance();
 var pickedWord = wordsCollection.getRandomWord();
-console.log(pickedWord.toString());
+console.log(pickedWord);
 var gamePresenter = new GamePresenter();
-var gameModel = new GameModel(pickedWord.toString());
+var gameModel = new GameModel(pickedWord);
 var gameView = new GameView();
 var gameController = new GameController(gameModel, gameView, gamePresenter);
-sessionStorage.setItem("pickedWordString", pickedWord.toString());
+sessionStorage.setItem("pickedWord", pickedWord);
 document.addEventListener("keydown", function (e) {
     gameController.newKeyPressed(e.code);
 });

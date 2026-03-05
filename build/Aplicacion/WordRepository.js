@@ -1,16 +1,15 @@
-import { Word } from "../Modelo/Word.js";
 var WordRepository = /** @class */ (function () {
     function WordRepository() {
         this.wordsCollection = [
-            new Word("JUEGO"),
-            new Word("TALAR"),
-            new Word("BAILE"),
-            new Word("ANDAR"),
-            new Word("MONTE"),
-            new Word("PLAYA"),
-            new Word("PLATA"),
-            new Word("ARBOL"),
-            new Word("QUESO")
+            "JUEGO",
+            "TALAR",
+            "BAILE",
+            "ANDAR",
+            "MONTE",
+            "PLAYA",
+            "PLATA",
+            "ARBOL",
+            "QUESO"
         ];
     }
     WordRepository.getInstance = function () {
