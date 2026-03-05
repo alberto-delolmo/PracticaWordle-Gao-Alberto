@@ -18,6 +18,11 @@ function init() {
 }
 function setKeyboardListener(gameController) {
     document.addEventListener("keydown", function (e) {
+        if (e.code === "Enter" ||
+            e.code === "Backspace" ||
+            e.code.startsWith("Key")) {
+            e.preventDefault();
+        }
         gameController.newKeyPressed(e.code);
     });
 }
