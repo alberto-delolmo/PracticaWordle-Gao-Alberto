@@ -132,3 +132,100 @@ h1 {
 .active {
     border: 2px solid black;
 }
+
+/* ---------- WINNER PAGE ---------- */
+
+.winner-container{
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    height: 80vh;
+    text-align: center;
+}
+
+.winner-title{
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+.play-again-btn{
+    padding: 1rem 2rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+    border-radius: .5rem;
+    border: none;
+    background-color: #6AAA64;
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+    transition: transform 0.15s, background-color 0.2s;
+}
+
+.play-again-btn:hover{
+    background-color: #538d4e;
+    transform: scale(1.05);
+}
+
+.play-again-btn:active{
+    transform: scale(0.95);
+}
+
+#lose_message{
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+}
+
+.lose-word{
+    color: #e63946;
+    font-weight: bold;
+    font-size: 1.6rem;
+}
+
+.key{
+    transition: all .15s ease;
+}
+
+.key:hover{
+    transform: scale(1.08);
+}
+
+.winner-container{
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    height: 80vh;
+    text-align: center;
+
+    animation: fadeIn .6s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform: translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform: translateY(0);
+    }
+}
+
+.winner-title{
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    animation: pop .5s ease;
+}
+
+@keyframes pop{
+    0%{
+        transform: scale(0.7);
+        opacity:0;
+    }
+    80%{
+        transform: scale(1.1);
+    }
+    100%{
+        transform: scale(1);
+        opacity:1;
+    }
+}

@@ -1,13 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+
     <title>Victoria</title>
 </head>
+
 <body>
-    <h1>HAS GANADO!!!</h1>
-    <p><a href="./index.html">Volver a jugar</a></p>
+
+<header>
+    <h1>WORDLE</h1>
+</header>
+
+<div class="winner-container">
+
+    <h2 class="winner-title">🎉 ¡HAS GANADO! 🎉</h2>
+
+    <button class="play-again-btn" onclick="sessionStorage.removeItem('pickedWordString'); location.href='index.html'">
+        Volver a jugar
+    </button>
+</div>
+<script type="module" src="/build/Vista/app.js"></script>
 </body>
 </html>

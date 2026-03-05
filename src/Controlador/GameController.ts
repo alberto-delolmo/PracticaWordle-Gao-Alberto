@@ -139,8 +139,7 @@ export class GameController {
     checkGameStatus() {
         if (this.game.isWinner()) {
             this.presenter.goToWinner();
-        } else
-        if (this.game.isLoser()) {
+        }else if(this.game.isLoser()){
             this.presenter.goToLoser();
         }
     }

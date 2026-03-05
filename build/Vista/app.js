@@ -17,3 +17,9 @@ document.addEventListener("keydown", function (e) {
 Array.from(document.getElementsByClassName("key")).forEach(function (element) { return element.addEventListener("click", function (e) {
     gameController.newKeyPressed(e.target.value);
 }); });
+var loseMessage = document.getElementById("lose_message");
+if (loseMessage) {
+    var palabra = sessionStorage.getItem("pickedWordString");
+    loseMessage.innerHTML =
+        "La palabra era: <span class=\"lose-word\">".concat(palabra, "</span>");
+}
