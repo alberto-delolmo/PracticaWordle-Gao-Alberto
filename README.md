@@ -1,35 +1,57 @@
-**Este es un repo del código de un clon del juego Wordle desarrollado en TypeScript. Es un código que tiene algún bug que hay que detectar y solucionar y está pensado para utilizarlo como práctica de refactorización para una formación en Clean code y principios SOLID.**
+# 🎮 Práctica Wordle Gao-Alberto
 
-**1. Para poder trabajar con el proyecto necesitas tener instalado NodeJs.**
+## 📌 Descripción General
 
-Para comprobar si tienes instalado NodeJs en tu equipo abre una terminal y escribe este comando: `node -v`. Si receibes una respuesta como esta `v22.8.0`, ya lo tienes. Si no, puedes instalarlo desde [aquí](https://nodejs.org/en/download).
+**Práctica Wordle Gao-Alberto** es una aplicación web que implementa una versión funcional del popular juego **Wordle**.  
+El objetivo del proyecto es aplicar principios de arquitectura MVC, programación orientada a objetos y buenas prácticas de desarrollo en TypeScript, integrando frontend y backend mediante un servidor Express, además de una buena aplicación de Clean Code y principios SOLID.
 
-*Node.js es un entorno de ejecución de JavaScript basado en el motor V8 de Chrome, que permite ejecutar código fuera del navegador.
-Su finalidad es el desarrollo backend y utiliza un modelo basado en eventos y asíncrono, es decir, puede hacer varias cosas sin quedarse bloqueado esperando, lo que le permite manejar muchas conexiones simultáneamente con bajo consumo de recursos.
-Es especialmente popular para crear APIs, servidores web y aplicaciones en tiempo real gracias a su ecosistema de paquetes (npm) que permite gestionar de forma muy cómoda las dependecias (utilidades de terceros) del proyecto.*
+El jugador debe adivinar una palabra objetivo en un número limitado de intentos. Tras cada intento, el sistema proporciona retroalimentación visual indicando:
 
-**2. Clona este repositorio en local**
+- Letras correctas en la posición correcta.
+- Letras correctas en posición incorrecta.
+- Letras que no pertenecen a la palabra.
 
-**3. Instala las dependencias**
+Este proyecto tiene un enfoque académico y práctico, orientado a reforzar conceptos como:
 
-Para ello abre una terminal y situate en el directorio del repositorio que acabas de clonar. Desde ahí ejecuta `npm install`. Esto descargará y configurará todas las dependecias del proyecto. 
+- Aplicación de Clean Code.
+- Principios SOLID.
+- Manipulación del DOM.
+- Gestión de eventos.
+- Flujo cliente-servidor con Express.
 
-*Cuando hablamos de dependencias nos referimos a utilidades o bibliotecas de terceros. Es decir, herramientas que han desarrollado otros programadores y que, debido a que son de código abierto, cualquiera puede usar en su proyecto. Si no modificas ese código nunca, no tiene sentido que lo controles mediante un repositorio de Git, por lo que ese código no se sube a los repositorios remotos, así aligeramos el código que controla el repo, y nos centramos solo en mantener el código del que somos propietarios. Para no controlar un archivo o carpeta dentro de un repo solo tenemos que añadirlo al archivo `.gitignore`. Las dependencias de un proyecto en NodeJS se gestionan mediante un archivo llamado `package.json`. Si quieres saber más sobre la finalidad de este archivo, puedes hacerlo desde [aquí](https://docs.npmjs.com/cli/v11/configuring-npm/package-json)*
+---
 
-**4. Ejecuta la app**
+## 🚀 Características Principales
 
-Solo tienes que ir a la terminal y ejecutar el comando `npm start`. Esto tambien se define dentro del `package.json`, en el apartado scripts.
+- ✔ Juego completo estilo Wordle.
+- ✔ Arquitectura MVC (Modelo – Vista – Controlador).
+- ✔ Evaluación automática de palabras.
+- ✔ Teclado virtual interactivo.
+- ✔ Soporte para teclado físico.
+- ✔ Sistema de turnos e intentos máximos.
+- ✔ Pantalla de victoria y derrota.
+- ✔ Implementado en TypeScript.
+- ✔ Servidor Express para servir archivos estáticos.
 
-**5. Accede a la app**
+---
 
-Abre el navegador y accede a la URL del servidor local, en concreto al puerto 3000 (un puerto bastante común para estos menesteres, se define dentro del código del proyecto, en el archivo index.ts): 
-[http://localhost:3000](
-http://localhost:3000)
+## 🛠 Tecnologías Utilizadas
 
-**6. Si trabajas en equipo**
+| Tecnología | Uso |
+|------------|------|
+| **TypeScript** | Lógica del juego y arquitectura |
+| **Node.js** | Entorno de ejecución |
+| **Express.js** | Servidor backend |
+| **HTML5** | Estructura de la interfaz |
+| **CSS3** | Estilos y diseño visual |
+| **Git** | Control de versiones |
 
-Uno de los miembros del equipo deberá crear un repo nuevo en Github y añadir al resto de integrantes del equipo como colaboradores. Ese es el repo que tendréis que compartir para la evaluación.
+---
 
-**7. Refactorizar**
+## ⚙ Instalación
 
-Los archivos sobre los que tenéis que trabajar son los .ts. A medida que vayáis haciendo cambios y queráis probarlos, necesitáis transpilar el código a JavaScript, para ello tendréis que ir a la consola, y, desde dentro de la carpeta raiz del proyecto, ecutar el comando `npm run tsc`. Una vez el transpilador haya acabado, tendrás que poner en marcha de nuevo la app con `npm start`.
+### 1️⃣ Clonar el repositorio
+
+```bash
+git clone [pendiente de definir]
+cd [nombre-del-repositorio]
