@@ -1,5 +1,5 @@
-import { ColorFactory } from "../Modelo/Colors/ColorFactory.js";
-import { LetterState } from "../Modelo/LetterState.js";
+import { ColorFactory } from "../model/color/ColorFactory.js";
+import { LetterState } from "../model/LetterState.js";
 var GameView = /** @class */ (function () {
     function GameView() {
     }

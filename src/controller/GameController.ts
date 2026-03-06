@@ -1,6 +1,6 @@
-import { GameModel } from "../Modelo/GameModel.js";
-import { GamePresenter } from "../Vista/GamePresenter.js";
-import { GameView } from "../Vista/GameView.js";
+import { GameModel } from "../model/GameModel.js";
+import { GamePresenter } from "../view/GamePresenter.js";
+import { GameView } from "../view/GameView.js";
 
 export class GameController {
 

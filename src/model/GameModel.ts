@@ -1,4 +1,4 @@
-import { MAX_ATTEMPTS, MAX_WORD_SIZE } from "../Aplicacion/env.js";
+import { MAX_ATTEMPTS, MAX_WORD_SIZE } from "../application/GameConfig.js";
 import { LetterState } from "./LetterState.js";
 import { WordEvaluator } from "./WordEvaluator.js"
 

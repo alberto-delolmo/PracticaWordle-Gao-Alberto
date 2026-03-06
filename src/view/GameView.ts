@@ -1,6 +1,6 @@
-import { ColorFactory } from "../Modelo/Colors/ColorFactory.js";
-import { GameModel } from "../Modelo/GameModel.js";
-import { LetterState } from "../Modelo/LetterState.js";
+import { ColorFactory } from "../model/color/ColorFactory.js";
+import { GameModel } from "../model/GameModel.js";
+import { LetterState } from "../model/LetterState.js";
 
 type KeyState = "correct" | "misplaced" | "wrong";
 
