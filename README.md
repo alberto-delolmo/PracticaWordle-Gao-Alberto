@@ -128,7 +128,7 @@ Archivo de configuración global que define constantes como:
 
 ```bash
 git clone https://github.com/alberto-delolmo/PracticaWordle-Gao-Alberto.git
-cd [nombre-del-repositorio]
+cd wordle-480-2025
 ```
 
 ### 2️⃣ Instalar dependencias
