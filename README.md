@@ -69,10 +69,7 @@ Encargado de la comunicación entre el Modelo y la Vista.
   - Gestiona eventos del teclado.
   - Coordina las acciones del juego.
   - Actualiza la vista según el estado del modelo.
-
-Responsabilidad principal:
-> Orquestar la lógica del flujo del juego.
-
+  - 
 ---
 
 ### 📂 model
@@ -103,11 +100,6 @@ Implementa el patrón **Factory** para la gestión de colores.
 - **Orange.ts** → Implementación para letra en posición incorrecta.
 - **Grey.ts** → Implementación para letra incorrecta.
 
-Este diseño permite:
-- Extensibilidad.
-- Cumplimiento del principio Open/Closed (SOLID).
-- Separación clara de responsabilidades.
-
 ---
 
 ### 📂 view
@@ -117,9 +109,6 @@ Gestiona la representación visual y la interacción con el DOM.
 - **App.ts** → Punto de entrada del frontend.
 - **GamePresenter.ts** → Intermediario entre modelo y vista.
 - **GameView.ts** → Manipulación directa del DOM.
-
-Responsabilidad principal:
-> Representar visualmente el estado del juego.
 
 ---
 
