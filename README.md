@@ -127,7 +127,7 @@ Archivo de configuración global que define constantes como:
 ### 1️⃣ Clonar el repositorio
 
 ```bash
-git clone [pendiente de definir]
+git clone https://github.com/alberto-delolmo/PracticaWordle-Gao-Alberto.git
 cd [nombre-del-repositorio]
 ```
 
