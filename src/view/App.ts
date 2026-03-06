@@ -1,6 +1,6 @@
-import { GameController } from "../Controlador/GameController.js";
-import { GameModel } from "../Modelo/GameModel.js";
-import { WordRepository } from "../Aplicacion/WordRepository.js";
+import { GameController } from "../controller/GameController.js";
+import { GameModel } from "../model/GameModel.js";
+import { WordRepository } from "../application/WordRepository.js";
 import { GamePresenter } from "./GamePresenter.js";
 import { GameView } from "./GameView.js";
 
