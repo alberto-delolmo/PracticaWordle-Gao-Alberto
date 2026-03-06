@@ -55,24 +55,27 @@ Este proyecto tiene un enfoque académico y práctico, orientado a reforzar conc
 ```bash
 git clone [pendiente de definir]
 cd [nombre-del-repositorio]
+```
 
 ### 2️⃣ Instalar dependencias
 
 ```bash
 npm install
+```
 
 ### 3️⃣ Compilar el proyecto
 
 ```bash
 npx tsc
+```
 
 ### 4️⃣ Ejecutar el servidor
 
 ```bash
 npm run start
-
+```
 
 ### 5️⃣ Abrir el juego en el navegador
-
+```bash
 http://localhost:3000
-
+```
