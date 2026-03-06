@@ -48,6 +48,91 @@ Este proyecto tiene un enfoque académico y práctico, orientado a reforzar conc
 
 ---
 
+## 📁 Estructura del Proyecto
+
+El proyecto está organizado siguiendo una arquitectura basada en el patrón **MVC (Modelo – Vista – Controlador)**, con una clara separación de responsabilidades.
+
+### 📂 application
+
+Contiene la configuración del servidor y la gestión de recursos externos.
+
+- **Server.ts** → Configuración del servidor Express y rutas principales.
+- **WordRepository.ts** → Gestión y obtención de palabras objetivo.
+
+---
+
+### 📂 controller
+
+Encargado de la comunicación entre el Modelo y la Vista.
+
+- **GameController.ts**
+  - Gestiona eventos del teclado.
+  - Coordina las acciones del juego.
+  - Actualiza la vista según el estado del modelo.
+
+Responsabilidad principal:
+> Orquestar la lógica del flujo del juego.
+
+---
+
+### 📂 model
+
+Contiene la lógica de negocio del juego.
+
+#### 🔹 GameModel.ts
+- Gestiona el estado del juego.
+- Controla turnos, palabra actual e intentos.
+- Determina si el jugador gana o pierde.
+
+#### 🔹 WordEvaluator.ts
+- Evalúa la palabra introducida.
+- Determina el estado de cada letra (Correct, Misplaced, Wrong).
+
+#### 🔹 LetterState.ts
+- Enumeración que define los posibles estados de una letra.
+
+---
+
+### 📂 model/color
+
+Implementa el patrón **Factory** para la gestión de colores.
+
+- **IColor.ts** → Interfaz base para colores.
+- **ColorFactory.ts** → Fábrica que devuelve el color correspondiente.
+- **Green.ts** → Implementación para letra correcta.
+- **Orange.ts** → Implementación para letra en posición incorrecta.
+- **Grey.ts** → Implementación para letra incorrecta.
+
+Este diseño permite:
+- Extensibilidad.
+- Cumplimiento del principio Open/Closed (SOLID).
+- Separación clara de responsabilidades.
+
+---
+
+### 📂 view
+
+Gestiona la representación visual y la interacción con el DOM.
+
+- **App.ts** → Punto de entrada del frontend.
+- **GamePresenter.ts** → Intermediario entre modelo y vista.
+- **GameView.ts** → Manipulación directa del DOM.
+
+Responsabilidad principal:
+> Representar visualmente el estado del juego.
+
+---
+
+### 📄 env.ts
+
+Archivo de configuración global que define constantes como:
+
+- Tamaño máximo de palabra.
+- Número máximo de intentos.
+
+
+---
+
 ## ⚙ Instalación
 
 ### 1️⃣ Clonar el repositorio
